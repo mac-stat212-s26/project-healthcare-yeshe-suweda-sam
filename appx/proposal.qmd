@@ -2,4 +2,35 @@
 title: "Proposal"
 ---
 
-Your proposal go here.
+---
+title: "proposal"
+format: html
+---
+
+# Birth Defects in Minnesota
+
+Suweda Said, Yeshe Jangchup, Sam Kenney
+
+## Description
+
+- A short description of the project
+
+## Research questions
+
+- 2-3 broad research questions
+
+## Motivations
+
+- reasons
+
+## Dataset
+
+We will be using the [Minnesota Department of Health's datasets for birth defects] (https://mndata.web.health.state.mn.us/birth_defects/messaging_pre.html).
+
+## Teamwork
+
+- communication plan
+
+- roles
+
+- conflict resolution
