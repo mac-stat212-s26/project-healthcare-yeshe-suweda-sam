@@ -1,0 +1,22 @@
+---
+title: "proposal"
+format: html
+---
+
+# Healthcare
+
+Suweda Said, Yeshe Jangchup, Sam Kenney
+
+- A short description of the project
+
+- 2-3 broad research questions
+
+- reasons
+
+- dataset
+
+- communication plan
+
+- roles
+
+- conflict resolution
