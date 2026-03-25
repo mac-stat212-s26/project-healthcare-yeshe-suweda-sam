@@ -13,7 +13,7 @@ Suweda Said, Yeshe Jangchup, Sam Kenney
 
 - reasons
 
-- dataset
+We will be using the [Minnesota Department of Health's datasets for birth defects] (https://mndata.web.health.state.mn.us/birth_defects/messaging_pre.html).
 
 - communication plan
 
