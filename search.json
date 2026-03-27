@@ -1,0 +1,166 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Project Title",
+    "section": "",
+    "text": "Your report goes here.\n\n\nCode\n# a test code chunk",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Report</span>"
+    ]
+  },
+  {
+    "objectID": "eda/eda-member1.html",
+    "href": "eda/eda-member1.html",
+    "title": "Member 1 First Name & Last Name Initial",
+    "section": "",
+    "text": "Your exploratory data analysis of the team datasets go here.",
+    "crumbs": [
+      "EDA",
+      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Member 1 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "eda/eda-member2.html",
+    "href": "eda/eda-member2.html",
+    "title": "Member 2 First Name & Last Name Initial",
+    "section": "",
+    "text": "Your exploratory data analysis of the team datasets go here.",
+    "crumbs": [
+      "EDA",
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "eda/eda-member3.html",
+    "href": "eda/eda-member3.html",
+    "title": "Member 3 First Name & Last Name Initial",
+    "section": "",
+    "text": "Your exploratory data analysis of the team datasets go here.",
+    "crumbs": [
+      "EDA",
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Member 3 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html",
+    "href": "appx/proposal.html",
+    "title": "Appendix A — Proposal",
+    "section": "",
+    "text": "Birth Defects in Minnesota\nSuweda Said, Yeshe Jangchup, Sam Kenney",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#description",
+    "href": "appx/proposal.html#description",
+    "title": "Appendix A — Proposal",
+    "section": "Description",
+    "text": "Description\nThis project will investigate different relationships between birth defects in Minnesota, as well as potential contributing factors to their prevalence, such as maternal features and folic acid.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#research-questions",
+    "href": "appx/proposal.html#research-questions",
+    "title": "Appendix A — Proposal",
+    "section": "Research questions",
+    "text": "Research questions\n\nHow does pre- and post-fortification of folic acid impact the prevalence of neural tube defect?\nHow does maternal education and financial background affect different birth defects?",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#motivations",
+    "href": "appx/proposal.html#motivations",
+    "title": "Appendix A — Proposal",
+    "section": "Motivations",
+    "text": "Motivations\nPublic health policies are constantly evolving and adapting to better support health outcomes. Birth defects have been a major focus of these policies. Especially with recent focus on maternal health policies, it’s important to understand how these initiatives are actually affecting child outcomes.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#dataset",
+    "href": "appx/proposal.html#dataset",
+    "title": "Appendix A — Proposal",
+    "section": "Dataset",
+    "text": "Dataset\nWe will be using the [Minnesota Department of Health’s datasets for birth defects] (https://mndata.web.health.state.mn.us/birth_defects/messaging_pre.html).",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#teamwork",
+    "href": "appx/proposal.html#teamwork",
+    "title": "Appendix A — Proposal",
+    "section": "Teamwork",
+    "text": "Teamwork\nOur primary method of communication will be over text.\nPoint of Contact: Suweda\nTechnical Lead: Sam\nStyle Lead: Yeshe\nIn case of conflicting opinions, we will do our best to compromise and incorporate elements of everyone’s idea as possible. If this is not possible, or if we are struggling to meet individual deadlines, we will work together to create a plan that meets everyone’s needs, and utilize outside resources and supports as necessary.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/proposal.html#implementation-plan",
+    "href": "appx/proposal.html#implementation-plan",
+    "title": "Appendix A — Proposal",
+    "section": "Implementation Plan",
+    "text": "Implementation Plan\nFollowing Milestone 4, we will meet and create a plan to build a cohesive and collaborative story.\nDeliverables: - README.md: one person will be responsible for preparing the README by 5/1 - Report: - Motivation: 4/10 - Research Questions: 4/15 - Background: 4/17 - Data: 4/20 - Data Insights: 4/23 - Conclusions: 4/27 - Limitations/Future Work: 4/29 - Final presentation video: 5/4 - Final presentation slides: 5/3",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
+    ]
+  },
+  {
+    "objectID": "appx/case-study.html",
+    "href": "appx/case-study.html",
+    "title": "Appendix B — Case Study",
+    "section": "",
+    "text": "Your case study go here.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "wa/wa-member1.html",
+    "href": "wa/wa-member1.html",
+    "title": "Appendix C — Member 1 First Name & Last Name Initial",
+    "section": "",
+    "text": "Work area to try code",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Member 1 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "wa/wa-member2.html",
+    "href": "wa/wa-member2.html",
+    "title": "Appendix D — Member 2 First Name & Last Name Initial",
+    "section": "",
+    "text": "Work area to try code",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
+    ]
+  },
+  {
+    "objectID": "wa/wa-member3.html",
+    "href": "wa/wa-member3.html",
+    "title": "Appendix E — Member 3 First Name & Last Name Initial",
+    "section": "",
+    "text": "Work area to try code",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Member 3 First Name & Last Name Initial</span>"
+    ]
+  }
+]
