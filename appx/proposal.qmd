@@ -40,16 +40,27 @@ In case of conflicting opinions, we will do our best to compromise and incorpora
 
 Following Milestone 4, we will meet and create a plan to build a cohesive and collaborative story. 
 
-Deliverables:
+### Deliverables:
+
 - README.md: one person will be responsible for preparing the README by 5/1
+
 - Report: 
+
   - Motivation: 4/10
+  
   - Research Questions: 4/15
+  
   - Background: 4/17
+  
   - Data: 4/20
+  
   - Data Insights: 4/23
+  
   - Conclusions: 4/27
+  
   - Limitations/Future Work: 4/29
+  
 - Final presentation video: 5/4
+
 - Final presentation slides: 5/3
 
