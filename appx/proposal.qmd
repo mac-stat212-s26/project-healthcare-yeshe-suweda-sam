@@ -16,6 +16,8 @@ This project will investigate different relationships between birth defects in M
 
 - How does maternal education and financial background affect different birth defects?
 
+- What patterns in birth defects can we observe across maternal age groups? Are certain conditions more or less commonly associated with certain age brackets?
+
 ## Motivations
 
 Public health policies are constantly evolving and adapting to better support health outcomes. Birth defects have been a major focus of these policies. Especially with recent focus on maternal health policies, it's important to understand how these initiatives are actually affecting child outcomes. 
