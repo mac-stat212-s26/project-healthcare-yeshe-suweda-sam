@@ -12,7 +12,9 @@ This project will investigate different relationships between birth defects in M
 
 ## Research questions
 
-- 2-3 broad research questions
+- How does pre- and post-fortification of folic acid impact the prevalence of neural tube defect?
+
+- How does maternal education and financial background affect different birth defects?
 
 ## Motivations
 
@@ -26,11 +28,11 @@ We will be using the [Minnesota Department of Health's datasets for birth defect
 
 Our primary method of communication will be over text. 
 
-Point of Contact:
+Point of Contact: Suweda
 
-Technical Lead:
+Technical Lead: Sam
 
-Style Lead: 
+Style Lead: Yeshe
 
 In case of conflicting opinions, we will do our best to compromise and incorporate elements of everyone's idea as possible. If this is not possible, or if we are struggling to meet individual deadlines, we will work together to create a plan that meets everyone's needs, and utilize outside resources and supports as necessary. 
 
