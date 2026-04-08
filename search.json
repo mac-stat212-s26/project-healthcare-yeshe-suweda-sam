@@ -91,7 +91,7 @@
     "href": "appx/proposal.html#dataset",
     "title": "Appendix A — Proposal",
     "section": "Dataset",
-    "text": "Dataset\nWe will be using the [Minnesota Department of Health’s datasets for birth defects] (https://mndata.web.health.state.mn.us/birth_defects/messaging_pre.html).",
+    "text": "Dataset\nWe will be using the Minnesota Department of Health’s datasets for birth defects.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>A</span>  <span class='chapter-title'>Proposal</span>"
