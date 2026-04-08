@@ -24,7 +24,7 @@ Public health policies are constantly evolving and adapting to better support he
 
 ## Dataset
 
-We will be using the [Minnesota Department of Health's datasets for birth defects] (https://mndata.web.health.state.mn.us/birth_defects/messaging_pre.html).
+We will be using the [Minnesota Department of Health's datasets for birth defects](https://mndata.web.health.state.mn.us/birth_defects/messaging_pre.html).
 
 ## Teamwork
 
