@@ -124,7 +124,51 @@
     "href": "appx/case-study.html",
     "title": "Appendix B — Case Study",
     "section": "",
-    "text": "Your case study go here.",
+    "text": "Introduction\nThe Pudding article on pockets begins with a relatable introduction to the problem. Fashion frustrations are almost universal, and the pockets debacle is a notoriously nonsensical one. The following paragraph digs further into the problem domain, quantifying the prevalence of the problem, and introduces the the implications of the pocket problem- both with gender inequality and manufactured necessity of purses. Then, in the third and fourth paragraphs, the article describes how they’re making sense of the problem (with data) and briefly describes their methods.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "appx/case-study.html#descriptive-visualizations-and-data",
+    "href": "appx/case-study.html#descriptive-visualizations-and-data",
+    "title": "Appendix B — Case Study",
+    "section": "Descriptive Visualizations and Data",
+    "text": "Descriptive Visualizations and Data\nThe visualizations increase in analytical depth, starting with just showing the reader the different pockets, faceted by gender. Then, a rudimentary average size. Their analysis of the data starts with some hand-wave-y language, like, “women’s pockets are ridiculous,” and not technical. That is followed up with concrete numbers, “pockets in women’s jeans are 48% shorter.” These visualizations are simple, not flashy, and effective.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "appx/case-study.html#in-depth",
+    "href": "appx/case-study.html#in-depth",
+    "title": "Appendix B — Case Study",
+    "section": "In Depth",
+    "text": "In Depth\nThe article then investigates functional impact of the data discovered earlier, and test what can fit in a pocket. The language is approachable, with some data included, and emphasizes the frustration that can occur with pants shopping. This data is presented more thoroughly in the form of an interactive visualization. There’s an aggregate, alongside a brand-by-brand breakdown, if the reader wants to get specific. They make a broad conclusion here, “women’s front pockets are indeed smaller than men’s,” and address a potential confounder of this data- waistband size- which they controlled for.\nThen, they break into other factors affecting pocket size, like style (straight vs. skinny), and they look at back pockets.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "appx/case-study.html#conclusion",
+    "href": "appx/case-study.html#conclusion",
+    "title": "Appendix B — Case Study",
+    "section": "Conclusion",
+    "text": "Conclusion\nThe article concludes with historical context, attempting to answer the question of why? and touches briefly on the problem’s roots in misogyny and objectification. It ends with a simple call to action.",
+    "crumbs": [
+      "Appendices",
+      "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
+    ]
+  },
+  {
+    "objectID": "appx/case-study.html#additional-info",
+    "href": "appx/case-study.html#additional-info",
+    "title": "Appendix B — Case Study",
+    "section": "Additional Info",
+    "text": "Additional Info\nWhile the article is made for a general audience, there’s a supplemental added methods section of the article, which included justification for methods, and more information on how the tests were conducted.",
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
