@@ -1,5 +1,25 @@
 ---
-title: "Member 1 First Name & Last Name Initial"
+title: "Member 1 Sam K"
 ---
 
-Your exploratory data analysis of the team datasets go here.
+```{r}
+library(tidyverse)
+```
+```{r}
+prevalence <- read.csv('../data/raw/Birth Defects_prevalence_data.csv')
+head(prevalence)
+```
+
+```{r}
+prevalence_clean <- prevalence %>%
+  select(Label, Value, Count, Note) %>%
+  arrange(desc(Value))
+
+ggplot(prevalence_clean, aes(x = Value)) +
+  geom_density()
+```
+
+Most of the tracked birth defects over 2016-2020 have a prevalence of around 10 per 10000 live births. 
+Hypospadias is the most prevalent. Hypospadias is a non-life threatening defect in male babies that is easily correctable with minor surgery, via [Mayo Clinic](https://www.mayoclinic.org/diseases-conditions/hypospadias/symptoms-causes/syc-20355148). 
+Anencephalus is the rarest. It's a serious defect where a baby is missing parts of the brain and skull at birth. Babies born with this defect will almost certainly die shortly after birth. The national estimate occurence is 2.10, so Minnesota's reported occurence is significantly lower than national estimate. 
+
