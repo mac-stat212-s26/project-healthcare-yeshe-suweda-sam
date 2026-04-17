@@ -5,6 +5,7 @@ title: "Member 1 Sam K"
 ```{r}
 library(tidyverse)
 ```
+
 ```{r}
 prevalence <- read.csv('../data/raw/Birth Defects_prevalence_data.csv')
 head(prevalence)
@@ -22,4 +23,36 @@ ggplot(prevalence_clean, aes(x = Value)) +
 Most of the tracked birth defects over 2016-2020 have a prevalence of around 10 per 10000 live births. 
 Hypospadias is the most prevalent. Hypospadias is a non-life threatening defect in male babies that is easily correctable with minor surgery, via [Mayo Clinic](https://www.mayoclinic.org/diseases-conditions/hypospadias/symptoms-causes/syc-20355148). 
 Anencephalus is the rarest. It's a serious defect where a baby is missing parts of the brain and skull at birth. Babies born with this defect will almost certainly die shortly after birth. The national estimate occurence is 2.10, so Minnesota's reported occurence is significantly lower than national estimate. 
+
+
+```{r}
+rates <- read.csv('../data/raw/Birth Defects_ntd_rates_data.csv')
+
+head(rates)
+```
+
+```{r}
+rates_clean <- rates %>%
+  select(Year, Value, Category, Note) 
+
+ggplot(rates_clean, aes(x = Year, y = Value, color = Category)) +
+  geom_point() +
+  geom_smooth()
+```
+Hispanic populations experience the highest prevalence of neural tube defects whereas black, non-Hispanic populations experiencing the lowest prevalence. 
+Neural tube defects are defects of the brain, spine, or spinal cord, that can appear in the first month of pregnancy, and are linked to folate and folic acid deficiencies. Anencephaly (above) is a type of NTD. Some NTDs are treatable, like spina bifida, whereas others are not. via [Cleveland Clinic](https://my.clevelandclinic.org/health/diseases/22656-neural-tube-defects-ntd).
+
+```{r}
+down_syndrome <- read.csv(
+  '../data/raw/Birth Defects_down_syndrome_mat_age_data.csv')
+
+head(down_syndrome)
+
+down_syndrome_clean <- down_syndrome %>%
+  select(Category, Value)
+
+ggplot(down_syndrome_clean, aes(x = Category, y = Value)) +
+  geom_point()
+```
+Down Syndrome prevalence increases greatly after age 39. 
 
