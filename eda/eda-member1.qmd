@@ -42,6 +42,15 @@ ggplot(rates_clean, aes(x = Year, y = Value, color = Category)) +
 Hispanic populations experience the highest prevalence of neural tube defects whereas black, non-Hispanic populations experiencing the lowest prevalence. 
 Neural tube defects are defects of the brain, spine, or spinal cord, that can appear in the first month of pregnancy, and are linked to folate and folic acid deficiencies. Anencephaly (above) is a type of NTD. Some NTDs are treatable, like spina bifida, whereas others are not. via [Cleveland Clinic](https://my.clevelandclinic.org/health/diseases/22656-neural-tube-defects-ntd).
 
+** What is Folate ** 
+Folate is a B vitamin present in vegetables, fruits, nuts, seafood, eggs, dairy, meat, and grains.via [NIH](https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/).
+Folic acid is a form of folate, which helps your body make new cells. via [CDC](https://www.cdc.gov/folic-acid/about/index.html). 
+
+
+In the early 90s, the recommended folic acid intake was **decreased**, despite data presented in the late 80s. A long term study ran from 1983 to 1991 showed an 71% reduction in NTDs with increased folic acid intake. Upon presenting these finding, the CDC issued a formal recommendation, but folic acid supplements were only available by prescription. More studies (sponsored by the FDA) were released with alternative findings, further complicating the availability of folic acid. 
+In 1993, the FDA began to consider the idea of fortification, i.e. adding vitamins to food. Supplements were not considered an adequate solution, as they would not be accessible to lower-income families. Also, because NTDs form in the first month of pregnancy, families may not know they're pregnant in time to have an effective dose of folate. By fortifying the food supply, access would be more equitable and the time window would be wider.
+In 1996, finally, the ruling on folic acid was published. via [FDA](https://www.fda.gov/files/about%20fda/published/Folic-Acid-Fortification--Fact-and-Folly.pdf) In 1998, the FDA began requiring manufacturers to add folic acid to grain products. via [NIH](https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/).
+
 ```{r}
 down_syndrome <- read.csv(
   '../data/raw/Birth Defects_down_syndrome_mat_age_data.csv')
