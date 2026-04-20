@@ -71,7 +71,6 @@ Down Syndrome prevalence increases greatly after age 39.
 
 ```{r}
 maternal_master <- read.csv('../data/raw/Birth Defects_Maternal Characteristics.csv')
-head(prevalence_master)
 
 folic_master <- read.csv('../data/raw/Birth Defects_Folic Acid.csv')
 ```
