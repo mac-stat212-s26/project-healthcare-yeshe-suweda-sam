@@ -35,9 +35,12 @@ head(rates)
 rates_clean <- rates %>%
   select(Year, Value, Category, Note) 
 
-ggplot(rates_clean, aes(x = Year, y = Value, color = Category)) +
-  geom_point() +
-  geom_smooth()
+  ggplot(rates_clean, aes(x = Year, y = Value, shape = Category)) +
+    annotate("rect", xmin = 1995, xmax = 1997, ymin = 2, ymax = 12, alpha = 0.5, fill = "purple") +
+    annotate("rect", xmin = 1997, xmax = 2011, ymin = 2, ymax = 12, alpha = 0.5, fill = "yellow") +
+    geom_point() +
+    geom_smooth(se = FALSE) +
+    theme_classic()
 ```
 Hispanic populations experience the highest prevalence of neural tube defects whereas black, non-Hispanic populations experiencing the lowest prevalence. 
 Neural tube defects are defects of the brain, spine, or spinal cord, that can appear in the first month of pregnancy, and are linked to folate and folic acid deficiencies. Anencephaly (above) is a type of NTD. Some NTDs are treatable, like spina bifida, whereas others are not. via [Cleveland Clinic](https://my.clevelandclinic.org/health/diseases/22656-neural-tube-defects-ntd).
@@ -65,3 +68,10 @@ ggplot(down_syndrome_clean, aes(x = Category, y = Value)) +
 ```
 Down Syndrome prevalence increases greatly after age 39. 
 
+
+```{r}
+maternal_master <- read.csv('../data/raw/Birth Defects_Maternal Characteristics.csv')
+head(prevalence_master)
+
+folic_master <- read.csv('../data/raw/Birth Defects_Folic Acid.csv')
+```
