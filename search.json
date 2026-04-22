@@ -23,12 +23,12 @@
   {
     "objectID": "eda/eda-member2.html",
     "href": "eda/eda-member2.html",
-    "title": "Member 2 First Name & Last Name Initial",
+    "title": "Suweda S",
     "section": "",
-    "text": "Your exploratory data analysis of the team datasets go here.",
+    "text": "Your exploratory data analysis of the team datasets go here.\n#load packages\nlibrary(tidyverse) data_1 &lt;- read.csv(“../data/raw/Birth Defects_ntd_rates_data.csv”) head(data_1) colnames(data_1)\ncleandata &lt;- data_1 %&gt;% filter(!is.na(Year), !is.na(Value))\ncleandata\\(Note &lt;- tolower(cleandata\\)Note)\ncleandata &lt;- cleandata[, colSums(is.na(cleandata)) &lt; nrow(cleandata)]\n\nRemove rows with more than 5 NAs\ncleandata &lt;- cleandata[rowSums(is.na(cleandata)) &lt;= 5, ]\n#seperate them\nprefort_data &lt;- cleandata %&gt;% filter(Note == “pre-fortification”)\npost_data &lt;-cleandata %&gt;% filter(Note == “post-fortification”) #find the mean for 10,000 live births for pre and post\nprefort_data &lt;- prefort_data %&gt;% filter(!is.na(Value)) post_data &lt;- post_data %&gt;% filter(!is.na(Value))\npre_mean &lt;- mean(prefort_data\\(Value, na.rm = TRUE)\npost_mean &lt;- mean(post_data\\)Value, na.rm = TRUE)\n#7.6 Neural Tube Defects per 10,000 live births (pre-mean)\n#5.27 Neural Tube Defects per 10,000 live births (post-mean) #combine data sets so we can plot\nall_data &lt;- rbind( prefort_data %&gt;% mutate(Fortification = “Pre-fortification”), post_data %&gt;% mutate(Fortification = “Post-fortification”) )\n#viz\nggplot(all_data, aes(x = factor(Year), y = Value, color = Fortification)) + geom_line(size = 1.2) +\ngeom_point(size = 3) +\nscale_color_manual(values = c(“Pre-fortification” = “pink”, “Post-fortification” = “powderblue”)) + theme_minimal() + labs( title = “Neural Tube Defects: Pre vs Post-Fortification”, x = “Year”, y = “NTD per 10,000 Live Births” ) + scale_x_discrete( breaks = seq(1995, 2011, by = 2))",
     "crumbs": [
       "EDA",
-      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Suweda S</span>"
     ]
   },
   {
