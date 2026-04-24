@@ -622,6 +622,63 @@ cookieconsent.run({
 <span id="cb11-3"><a href="#cb11-3"></a>folic_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Folic Acid.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>ntd_prevalence <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span> </span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">filter</span>(Subtopic <span class="sc">==</span> <span class="st">"Neural tube defects"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.numeric</span>(Year))</span>
+<span id="cb12-4"><a href="#cb12-4"></a></span>
+<span id="cb12-5"><a href="#cb12-5"></a>avg_ntd_prevalence <span class="ot">&lt;-</span> ntd_prevalence <span class="sc">%&gt;%</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="fu">summarize</span>(<span class="at">Value =</span> <span class="fu">mean</span>(Value)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="st">"Average"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a>ntd_master <span class="ot">&lt;-</span> ntd_prevalence <span class="sc">%&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="fu">bind_rows</span>(avg_ntd_prevalence)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">ggplot</span>(ntd_master, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="dv">1995</span>, <span class="at">xmax =</span> <span class="dv">1997</span>, <span class="at">ymin =</span> <span class="dv">2</span>, <span class="at">ymax =</span> <span class="dv">12</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> ntd_prevalence, <span class="fu">aes</span>(<span class="at">color =</span> Category)) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> Category, <span class="at">linetype =</span> Category), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">scale_color_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Year'</span>, <span class="at">y =</span> <span class="st">'NTD Prevalence per 100,000 Live Births'</span>, <span class="at">title =</span> <span class="st">'Neural Tube Defect Prevalence by Year and Race'</span>, <span class="at">caption =</span> <span class="st">'via MN Department of Health'</span>) <span class="sc">+</span></span>
+<span id="cb13-8"><a href="#cb13-8"></a>  <span class="fu">theme_classic</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>folic_intake <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">filter</span>(Subtopic <span class="sc">==</span> <span class="st">'Folic Acid Use'</span>, Variable <span class="sc">==</span> <span class="st">'Race/Ethnicity'</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="fu">ggplot</span>(folic_intake, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> Value, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">'#440154FF'</span>, <span class="st">'#3B528Bff'</span>, <span class="st">'#5DC863FF'</span>, <span class="st">'#21908CFF'</span>, <span class="st">'#FDE725FF'</span>)) <span class="sc">+</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Race'</span>, <span class="at">y =</span> <span class="st">'Percent taking Daily Supplement'</span>, <span class="at">title =</span> <span class="st">'Daily Folic Acid Supplementation by Race'</span>, <span class="at">caption =</span> <span class="st">'via MN Department of Health'</span>) <span class="sc">+</span></span>
+<span id="cb14-8"><a href="#cb14-8"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="eda-member1_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 <!-- -->
@@ -1109,82 +1166,120 @@ cookieconsent.run({
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1"></a><span class="co">---</span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="an">title:</span><span class="co"> "Member 1 Sam K"</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="co">---</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a></span>
-<span id="cb12-7"><a href="#cb12-7"></a><span class="in">```{r}</span></span>
-<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb12-9"><a href="#cb12-9"></a><span class="in">```</span></span>
-<span id="cb12-10"><a href="#cb12-10"></a></span>
-<span id="cb12-13"><a href="#cb12-13"></a><span class="in">```{r}</span></span>
-<span id="cb12-14"><a href="#cb12-14"></a>prevalence <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_prevalence_data.csv'</span>)</span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="fu">head</span>(prevalence)</span>
-<span id="cb12-16"><a href="#cb12-16"></a><span class="in">```</span></span>
-<span id="cb12-17"><a href="#cb12-17"></a></span>
-<span id="cb12-20"><a href="#cb12-20"></a><span class="in">```{r}</span></span>
-<span id="cb12-21"><a href="#cb12-21"></a>prevalence_clean <span class="ot">&lt;-</span> prevalence <span class="sc">%&gt;%</span></span>
-<span id="cb12-22"><a href="#cb12-22"></a>  <span class="fu">select</span>(Label, Value, Count, Note) <span class="sc">%&gt;%</span></span>
-<span id="cb12-23"><a href="#cb12-23"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Value))</span>
-<span id="cb12-24"><a href="#cb12-24"></a></span>
-<span id="cb12-25"><a href="#cb12-25"></a><span class="fu">ggplot</span>(prevalence_clean, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
-<span id="cb12-26"><a href="#cb12-26"></a>  <span class="fu">geom_density</span>()</span>
-<span id="cb12-27"><a href="#cb12-27"></a><span class="in">```</span></span>
-<span id="cb12-28"><a href="#cb12-28"></a></span>
-<span id="cb12-29"><a href="#cb12-29"></a>Most of the tracked birth defects over 2016-2020 have a prevalence of around 10 per 10000 live births. </span>
-<span id="cb12-30"><a href="#cb12-30"></a>Hypospadias is the most prevalent. Hypospadias is a non-life threatening defect in male babies that is easily correctable with minor surgery, via <span class="co">[</span><span class="ot">Mayo Clinic</span><span class="co">](https://www.mayoclinic.org/diseases-conditions/hypospadias/symptoms-causes/syc-20355148)</span>. </span>
-<span id="cb12-31"><a href="#cb12-31"></a>Anencephalus is the rarest. It's a serious defect where a baby is missing parts of the brain and skull at birth. Babies born with this defect will almost certainly die shortly after birth. The national estimate occurence is 2.10, so Minnesota's reported occurence is significantly lower than national estimate. </span>
-<span id="cb12-32"><a href="#cb12-32"></a></span>
-<span id="cb12-33"><a href="#cb12-33"></a></span>
-<span id="cb12-36"><a href="#cb12-36"></a><span class="in">```{r}</span></span>
-<span id="cb12-37"><a href="#cb12-37"></a>rates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_ntd_rates_data.csv'</span>)</span>
-<span id="cb12-38"><a href="#cb12-38"></a></span>
-<span id="cb12-39"><a href="#cb12-39"></a><span class="fu">head</span>(rates)</span>
-<span id="cb12-40"><a href="#cb12-40"></a><span class="in">```</span></span>
-<span id="cb12-41"><a href="#cb12-41"></a></span>
-<span id="cb12-44"><a href="#cb12-44"></a><span class="in">```{r}</span></span>
-<span id="cb12-45"><a href="#cb12-45"></a>rates_clean <span class="ot">&lt;-</span> rates <span class="sc">%&gt;%</span></span>
-<span id="cb12-46"><a href="#cb12-46"></a>  <span class="fu">select</span>(Year, Value, Category, Note) </span>
-<span id="cb12-47"><a href="#cb12-47"></a></span>
-<span id="cb12-48"><a href="#cb12-48"></a>  <span class="fu">ggplot</span>(rates_clean, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Value, <span class="at">shape =</span> Category)) <span class="sc">+</span></span>
-<span id="cb12-49"><a href="#cb12-49"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="dv">1995</span>, <span class="at">xmax =</span> <span class="dv">1997</span>, <span class="at">ymin =</span> <span class="dv">2</span>, <span class="at">ymax =</span> <span class="dv">12</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
-<span id="cb12-50"><a href="#cb12-50"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="dv">1997</span>, <span class="at">xmax =</span> <span class="dv">2011</span>, <span class="at">ymin =</span> <span class="dv">2</span>, <span class="at">ymax =</span> <span class="dv">12</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"yellow"</span>) <span class="sc">+</span></span>
-<span id="cb12-51"><a href="#cb12-51"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb12-52"><a href="#cb12-52"></a>    <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb12-53"><a href="#cb12-53"></a>    <span class="fu">theme_classic</span>()</span>
-<span id="cb12-54"><a href="#cb12-54"></a><span class="in">```</span></span>
-<span id="cb12-55"><a href="#cb12-55"></a>Hispanic populations experience the highest prevalence of neural tube defects whereas black, non-Hispanic populations experiencing the lowest prevalence. </span>
-<span id="cb12-56"><a href="#cb12-56"></a>Neural tube defects are defects of the brain, spine, or spinal cord, that can appear in the first month of pregnancy, and are linked to folate and folic acid deficiencies. Anencephaly (above) is a type of NTD. Some NTDs are treatable, like spina bifida, whereas others are not. via <span class="co">[</span><span class="ot">Cleveland Clinic</span><span class="co">](https://my.clevelandclinic.org/health/diseases/22656-neural-tube-defects-ntd)</span>.</span>
-<span id="cb12-57"><a href="#cb12-57"></a></span>
-<span id="cb12-58"><a href="#cb12-58"></a>** What is Folate ** </span>
-<span id="cb12-59"><a href="#cb12-59"></a>Folate is a B vitamin present in vegetables, fruits, nuts, seafood, eggs, dairy, meat, and grains.via <span class="co">[</span><span class="ot">NIH</span><span class="co">](https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/)</span>.</span>
-<span id="cb12-60"><a href="#cb12-60"></a>Folic acid is a form of folate, which helps your body make new cells. via <span class="co">[</span><span class="ot">CDC</span><span class="co">](https://www.cdc.gov/folic-acid/about/index.html)</span>. </span>
-<span id="cb12-61"><a href="#cb12-61"></a></span>
-<span id="cb12-62"><a href="#cb12-62"></a></span>
-<span id="cb12-63"><a href="#cb12-63"></a>In the early 90s, the recommended folic acid intake was **decreased**, despite data presented in the late 80s. A long term study ran from 1983 to 1991 showed an 71% reduction in NTDs with increased folic acid intake. Upon presenting these finding, the CDC issued a formal recommendation, but folic acid supplements were only available by prescription. More studies (sponsored by the FDA) were released with alternative findings, further complicating the availability of folic acid. </span>
-<span id="cb12-64"><a href="#cb12-64"></a>In 1993, the FDA began to consider the idea of fortification, i.e. adding vitamins to food. Supplements were not considered an adequate solution, as they would not be accessible to lower-income families. Also, because NTDs form in the first month of pregnancy, families may not know they're pregnant in time to have an effective dose of folate. By fortifying the food supply, access would be more equitable and the time window would be wider.</span>
-<span id="cb12-65"><a href="#cb12-65"></a>In 1996, finally, the ruling on folic acid was published. via <span class="co">[</span><span class="ot">FDA</span><span class="co">](https://www.fda.gov/files/about%20fda/published/Folic-Acid-Fortification--Fact-and-Folly.pdf)</span> In 1998, the FDA began requiring manufacturers to add folic acid to grain products. via <span class="co">[</span><span class="ot">NIH</span><span class="co">](https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/)</span>.</span>
-<span id="cb12-66"><a href="#cb12-66"></a></span>
-<span id="cb12-69"><a href="#cb12-69"></a><span class="in">```{r}</span></span>
-<span id="cb12-70"><a href="#cb12-70"></a>down_syndrome <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
-<span id="cb12-71"><a href="#cb12-71"></a>  <span class="st">'../data/raw/Birth Defects_down_syndrome_mat_age_data.csv'</span>)</span>
-<span id="cb12-72"><a href="#cb12-72"></a></span>
-<span id="cb12-73"><a href="#cb12-73"></a><span class="fu">head</span>(down_syndrome)</span>
-<span id="cb12-74"><a href="#cb12-74"></a></span>
-<span id="cb12-75"><a href="#cb12-75"></a>down_syndrome_clean <span class="ot">&lt;-</span> down_syndrome <span class="sc">%&gt;%</span></span>
-<span id="cb12-76"><a href="#cb12-76"></a>  <span class="fu">select</span>(Category, Value)</span>
-<span id="cb12-77"><a href="#cb12-77"></a></span>
-<span id="cb12-78"><a href="#cb12-78"></a><span class="fu">ggplot</span>(down_syndrome_clean, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
-<span id="cb12-79"><a href="#cb12-79"></a>  <span class="fu">geom_point</span>()</span>
-<span id="cb12-80"><a href="#cb12-80"></a><span class="in">```</span></span>
-<span id="cb12-81"><a href="#cb12-81"></a>Down Syndrome prevalence increases greatly after age 39. </span>
-<span id="cb12-82"><a href="#cb12-82"></a></span>
-<span id="cb12-83"><a href="#cb12-83"></a></span>
-<span id="cb12-86"><a href="#cb12-86"></a><span class="in">```{r}</span></span>
-<span id="cb12-87"><a href="#cb12-87"></a>maternal_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Maternal Characteristics.csv'</span>)</span>
-<span id="cb12-88"><a href="#cb12-88"></a></span>
-<span id="cb12-89"><a href="#cb12-89"></a>folic_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Folic Acid.csv'</span>)</span>
-<span id="cb12-90"><a href="#cb12-90"></a><span class="in">```</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">---</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="an">title:</span><span class="co"> "Member 1 Sam K"</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">---</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a></span>
+<span id="cb15-7"><a href="#cb15-7"></a><span class="in">```{r}</span></span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb15-9"><a href="#cb15-9"></a><span class="in">```</span></span>
+<span id="cb15-10"><a href="#cb15-10"></a></span>
+<span id="cb15-13"><a href="#cb15-13"></a><span class="in">```{r}</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a>prevalence <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_prevalence_data.csv'</span>)</span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="fu">head</span>(prevalence)</span>
+<span id="cb15-16"><a href="#cb15-16"></a><span class="in">```</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a></span>
+<span id="cb15-20"><a href="#cb15-20"></a><span class="in">```{r}</span></span>
+<span id="cb15-21"><a href="#cb15-21"></a>prevalence_clean <span class="ot">&lt;-</span> prevalence <span class="sc">%&gt;%</span></span>
+<span id="cb15-22"><a href="#cb15-22"></a>  <span class="fu">select</span>(Label, Value, Count, Note) <span class="sc">%&gt;%</span></span>
+<span id="cb15-23"><a href="#cb15-23"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Value))</span>
+<span id="cb15-24"><a href="#cb15-24"></a></span>
+<span id="cb15-25"><a href="#cb15-25"></a><span class="fu">ggplot</span>(prevalence_clean, <span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb15-26"><a href="#cb15-26"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb15-27"><a href="#cb15-27"></a><span class="in">```</span></span>
+<span id="cb15-28"><a href="#cb15-28"></a></span>
+<span id="cb15-29"><a href="#cb15-29"></a>Most of the tracked birth defects over 2016-2020 have a prevalence of around 10 per 10000 live births. </span>
+<span id="cb15-30"><a href="#cb15-30"></a>Hypospadias is the most prevalent. Hypospadias is a non-life threatening defect in male babies that is easily correctable with minor surgery, via <span class="co">[</span><span class="ot">Mayo Clinic</span><span class="co">](https://www.mayoclinic.org/diseases-conditions/hypospadias/symptoms-causes/syc-20355148)</span>. </span>
+<span id="cb15-31"><a href="#cb15-31"></a>Anencephalus is the rarest. It's a serious defect where a baby is missing parts of the brain and skull at birth. Babies born with this defect will almost certainly die shortly after birth. The national estimate occurence is 2.10, so Minnesota's reported occurence is significantly lower than national estimate. </span>
+<span id="cb15-32"><a href="#cb15-32"></a></span>
+<span id="cb15-33"><a href="#cb15-33"></a></span>
+<span id="cb15-36"><a href="#cb15-36"></a><span class="in">```{r}</span></span>
+<span id="cb15-37"><a href="#cb15-37"></a>rates <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_ntd_rates_data.csv'</span>)</span>
+<span id="cb15-38"><a href="#cb15-38"></a></span>
+<span id="cb15-39"><a href="#cb15-39"></a><span class="fu">head</span>(rates)</span>
+<span id="cb15-40"><a href="#cb15-40"></a><span class="in">```</span></span>
+<span id="cb15-41"><a href="#cb15-41"></a></span>
+<span id="cb15-44"><a href="#cb15-44"></a><span class="in">```{r}</span></span>
+<span id="cb15-45"><a href="#cb15-45"></a>rates_clean <span class="ot">&lt;-</span> rates <span class="sc">%&gt;%</span></span>
+<span id="cb15-46"><a href="#cb15-46"></a>  <span class="fu">select</span>(Year, Value, Category, Note) </span>
+<span id="cb15-47"><a href="#cb15-47"></a></span>
+<span id="cb15-48"><a href="#cb15-48"></a>  <span class="fu">ggplot</span>(rates_clean, <span class="fu">aes</span>(<span class="at">x =</span> Year, <span class="at">y =</span> Value, <span class="at">shape =</span> Category)) <span class="sc">+</span></span>
+<span id="cb15-49"><a href="#cb15-49"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="dv">1995</span>, <span class="at">xmax =</span> <span class="dv">1997</span>, <span class="at">ymin =</span> <span class="dv">2</span>, <span class="at">ymax =</span> <span class="dv">12</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"purple"</span>) <span class="sc">+</span></span>
+<span id="cb15-50"><a href="#cb15-50"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="dv">1997</span>, <span class="at">xmax =</span> <span class="dv">2011</span>, <span class="at">ymin =</span> <span class="dv">2</span>, <span class="at">ymax =</span> <span class="dv">12</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"yellow"</span>) <span class="sc">+</span></span>
+<span id="cb15-51"><a href="#cb15-51"></a>    <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb15-52"><a href="#cb15-52"></a>    <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb15-53"><a href="#cb15-53"></a>    <span class="fu">theme_classic</span>()</span>
+<span id="cb15-54"><a href="#cb15-54"></a><span class="in">```</span></span>
+<span id="cb15-55"><a href="#cb15-55"></a>Hispanic populations experience the highest prevalence of neural tube defects whereas black, non-Hispanic populations experiencing the lowest prevalence. </span>
+<span id="cb15-56"><a href="#cb15-56"></a>Neural tube defects are defects of the brain, spine, or spinal cord, that can appear in the first month of pregnancy, and are linked to folate and folic acid deficiencies. Anencephaly (above) is a type of NTD. Some NTDs are treatable, like spina bifida, whereas others are not. via <span class="co">[</span><span class="ot">Cleveland Clinic</span><span class="co">](https://my.clevelandclinic.org/health/diseases/22656-neural-tube-defects-ntd)</span>.</span>
+<span id="cb15-57"><a href="#cb15-57"></a></span>
+<span id="cb15-58"><a href="#cb15-58"></a>** What is Folate ** </span>
+<span id="cb15-59"><a href="#cb15-59"></a>Folate is a B vitamin present in vegetables, fruits, nuts, seafood, eggs, dairy, meat, and grains.via <span class="co">[</span><span class="ot">NIH</span><span class="co">](https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/)</span>.</span>
+<span id="cb15-60"><a href="#cb15-60"></a>Folic acid is a form of folate, which helps your body make new cells. via <span class="co">[</span><span class="ot">CDC</span><span class="co">](https://www.cdc.gov/folic-acid/about/index.html)</span>. </span>
+<span id="cb15-61"><a href="#cb15-61"></a></span>
+<span id="cb15-62"><a href="#cb15-62"></a></span>
+<span id="cb15-63"><a href="#cb15-63"></a>In the early 90s, the recommended folic acid intake was **decreased**, despite data presented in the late 80s. A long term study ran from 1983 to 1991 showed an 71% reduction in NTDs with increased folic acid intake. Upon presenting these finding, the CDC issued a formal recommendation, but folic acid supplements were only available by prescription. More studies (sponsored by the FDA) were released with alternative findings, further complicating the availability of folic acid. </span>
+<span id="cb15-64"><a href="#cb15-64"></a>In 1993, the FDA began to consider the idea of fortification, i.e. adding vitamins to food. Supplements were not considered an adequate solution, as they would not be accessible to lower-income families. Also, because NTDs form in the first month of pregnancy, families may not know they're pregnant in time to have an effective dose of folate. By fortifying the food supply, access would be more equitable and the time window would be wider.</span>
+<span id="cb15-65"><a href="#cb15-65"></a>In 1996, finally, the ruling on folic acid was published. via <span class="co">[</span><span class="ot">FDA</span><span class="co">](https://www.fda.gov/files/about%20fda/published/Folic-Acid-Fortification--Fact-and-Folly.pdf)</span> In 1998, the FDA began requiring manufacturers to add folic acid to grain products. via <span class="co">[</span><span class="ot">NIH</span><span class="co">](https://ods.od.nih.gov/factsheets/Folate-HealthProfessional/)</span>.</span>
+<span id="cb15-66"><a href="#cb15-66"></a></span>
+<span id="cb15-69"><a href="#cb15-69"></a><span class="in">```{r}</span></span>
+<span id="cb15-70"><a href="#cb15-70"></a>down_syndrome <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(</span>
+<span id="cb15-71"><a href="#cb15-71"></a>  <span class="st">'../data/raw/Birth Defects_down_syndrome_mat_age_data.csv'</span>)</span>
+<span id="cb15-72"><a href="#cb15-72"></a></span>
+<span id="cb15-73"><a href="#cb15-73"></a><span class="fu">head</span>(down_syndrome)</span>
+<span id="cb15-74"><a href="#cb15-74"></a></span>
+<span id="cb15-75"><a href="#cb15-75"></a>down_syndrome_clean <span class="ot">&lt;-</span> down_syndrome <span class="sc">%&gt;%</span></span>
+<span id="cb15-76"><a href="#cb15-76"></a>  <span class="fu">select</span>(Category, Value)</span>
+<span id="cb15-77"><a href="#cb15-77"></a></span>
+<span id="cb15-78"><a href="#cb15-78"></a><span class="fu">ggplot</span>(down_syndrome_clean, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
+<span id="cb15-79"><a href="#cb15-79"></a>  <span class="fu">geom_point</span>()</span>
+<span id="cb15-80"><a href="#cb15-80"></a><span class="in">```</span></span>
+<span id="cb15-81"><a href="#cb15-81"></a>Down Syndrome prevalence increases greatly after age 39. </span>
+<span id="cb15-82"><a href="#cb15-82"></a></span>
+<span id="cb15-83"><a href="#cb15-83"></a></span>
+<span id="cb15-86"><a href="#cb15-86"></a><span class="in">```{r}</span></span>
+<span id="cb15-87"><a href="#cb15-87"></a>maternal_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Maternal Characteristics.csv'</span>)</span>
+<span id="cb15-88"><a href="#cb15-88"></a></span>
+<span id="cb15-89"><a href="#cb15-89"></a>folic_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Folic Acid.csv'</span>)</span>
+<span id="cb15-90"><a href="#cb15-90"></a><span class="in">```</span></span>
+<span id="cb15-91"><a href="#cb15-91"></a></span>
+<span id="cb15-92"><a href="#cb15-92"></a></span>
+<span id="cb15-95"><a href="#cb15-95"></a><span class="in">```{r}</span></span>
+<span id="cb15-96"><a href="#cb15-96"></a>ntd_prevalence <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span> </span>
+<span id="cb15-97"><a href="#cb15-97"></a>  <span class="fu">filter</span>(Subtopic <span class="sc">==</span> <span class="st">"Neural tube defects"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb15-98"><a href="#cb15-98"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.numeric</span>(Year))</span>
+<span id="cb15-99"><a href="#cb15-99"></a></span>
+<span id="cb15-100"><a href="#cb15-100"></a>avg_ntd_prevalence <span class="ot">&lt;-</span> ntd_prevalence <span class="sc">%&gt;%</span></span>
+<span id="cb15-101"><a href="#cb15-101"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb15-102"><a href="#cb15-102"></a>  <span class="fu">summarize</span>(<span class="at">Value =</span> <span class="fu">mean</span>(Value)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-103"><a href="#cb15-103"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="st">"Average"</span>)</span>
+<span id="cb15-104"><a href="#cb15-104"></a></span>
+<span id="cb15-105"><a href="#cb15-105"></a>ntd_master <span class="ot">&lt;-</span> ntd_prevalence <span class="sc">%&gt;%</span></span>
+<span id="cb15-106"><a href="#cb15-106"></a>  <span class="fu">bind_rows</span>(avg_ntd_prevalence)</span>
+<span id="cb15-107"><a href="#cb15-107"></a><span class="in">```</span></span>
+<span id="cb15-108"><a href="#cb15-108"></a></span>
+<span id="cb15-111"><a href="#cb15-111"></a><span class="in">```{r}</span></span>
+<span id="cb15-112"><a href="#cb15-112"></a><span class="fu">ggplot</span>(ntd_master, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> Value)) <span class="sc">+</span></span>
+<span id="cb15-113"><a href="#cb15-113"></a>  <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">xmin =</span> <span class="dv">1995</span>, <span class="at">xmax =</span> <span class="dv">1997</span>, <span class="at">ymin =</span> <span class="dv">2</span>, <span class="at">ymax =</span> <span class="dv">12</span>, <span class="at">alpha =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"grey"</span>) <span class="sc">+</span></span>
+<span id="cb15-114"><a href="#cb15-114"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> ntd_prevalence, <span class="fu">aes</span>(<span class="at">color =</span> Category)) <span class="sc">+</span></span>
+<span id="cb15-115"><a href="#cb15-115"></a>  <span class="fu">geom_smooth</span>(<span class="fu">aes</span>(<span class="at">color =</span> Category, <span class="at">linetype =</span> Category), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb15-116"><a href="#cb15-116"></a>  <span class="fu">scale_color_viridis_d</span>() <span class="sc">+</span></span>
+<span id="cb15-117"><a href="#cb15-117"></a>  <span class="fu">scale_linetype_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb15-118"><a href="#cb15-118"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Year'</span>, <span class="at">y =</span> <span class="st">'NTD Prevalence per 100,000 Live Births'</span>, <span class="at">title =</span> <span class="st">'Neural Tube Defect Prevalence by Year and Race'</span>, <span class="at">caption =</span> <span class="st">'via MN Department of Health'</span>) <span class="sc">+</span></span>
+<span id="cb15-119"><a href="#cb15-119"></a>  <span class="fu">theme_classic</span>()</span>
+<span id="cb15-120"><a href="#cb15-120"></a><span class="in">```</span></span>
+<span id="cb15-121"><a href="#cb15-121"></a></span>
+<span id="cb15-124"><a href="#cb15-124"></a><span class="in">```{r}</span></span>
+<span id="cb15-125"><a href="#cb15-125"></a>folic_intake <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span></span>
+<span id="cb15-126"><a href="#cb15-126"></a>  <span class="fu">filter</span>(Subtopic <span class="sc">==</span> <span class="st">'Folic Acid Use'</span>, Variable <span class="sc">==</span> <span class="st">'Race/Ethnicity'</span>)</span>
+<span id="cb15-127"><a href="#cb15-127"></a></span>
+<span id="cb15-128"><a href="#cb15-128"></a><span class="fu">ggplot</span>(folic_intake, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> Value, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
+<span id="cb15-129"><a href="#cb15-129"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb15-130"><a href="#cb15-130"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">'#440154FF'</span>, <span class="st">'#3B528Bff'</span>, <span class="st">'#5DC863FF'</span>, <span class="st">'#21908CFF'</span>, <span class="st">'#FDE725FF'</span>)) <span class="sc">+</span></span>
+<span id="cb15-131"><a href="#cb15-131"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">'Race'</span>, <span class="at">y =</span> <span class="st">'Percent taking Daily Supplement'</span>, <span class="at">title =</span> <span class="st">'Daily Folic Acid Supplementation by Race'</span>, <span class="at">caption =</span> <span class="st">'via MN Department of Health'</span>) <span class="sc">+</span></span>
+<span id="cb15-132"><a href="#cb15-132"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb15-133"><a href="#cb15-133"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(), <span class="at">axis.ticks.x =</span> <span class="fu">element_blank</span>())</span>
+<span id="cb15-134"><a href="#cb15-134"></a><span class="in">```</span></span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
