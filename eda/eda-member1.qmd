@@ -74,3 +74,41 @@ maternal_master <- read.csv('../data/raw/Birth Defects_Maternal Characteristics.
 
 folic_master <- read.csv('../data/raw/Birth Defects_Folic Acid.csv')
 ```
+
+
+```{r}
+ntd_prevalence <- folic_master %>% 
+  filter(Subtopic == "Neural tube defects") %>% 
+  mutate(year = as.numeric(Year))
+
+avg_ntd_prevalence <- ntd_prevalence %>%
+  group_by(year) %>%
+  summarize(Value = mean(Value)) %>%
+  mutate(Category = "Average")
+
+ntd_master <- ntd_prevalence %>%
+  bind_rows(avg_ntd_prevalence)
+```
+
+```{r}
+ggplot(ntd_master, aes(x = year, y = Value)) +
+  annotate("rect", xmin = 1995, xmax = 1997, ymin = 2, ymax = 12, alpha = 0.5, fill = "grey") +
+  geom_point(data = ntd_prevalence, aes(color = Category)) +
+  geom_smooth(aes(color = Category, linetype = Category), se = FALSE) +
+  scale_color_viridis_d() +
+  scale_linetype_manual(values = c(2, 1, 1, 1)) +
+  labs(x = 'Year', y = 'NTD Prevalence per 100,000 Live Births', title = 'Neural Tube Defect Prevalence by Year and Race', caption = 'via MN Department of Health') +
+  theme_classic()
+```
+
+```{r}
+folic_intake <- folic_master %>%
+  filter(Subtopic == 'Folic Acid Use', Variable == 'Race/Ethnicity')
+
+ggplot(folic_intake, aes(x = Category, y = Value, fill = Category)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c('#440154FF', '#3B528Bff', '#5DC863FF', '#21908CFF', '#FDE725FF')) +
+  labs(x = 'Race', y = 'Percent taking Daily Supplement', title = 'Daily Folic Acid Supplementation by Race', caption = 'via MN Department of Health') +
+  theme_classic() +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+```
