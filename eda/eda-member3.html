@@ -346,7 +346,7 @@ cookieconsent.run({
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Report</span></a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Birth Defects in Minnesota Data Report</span></a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -470,7 +470,7 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Averaged across 2016-2022 (to match the source chart)</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># Averaged across 2016-2022</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>folic_ed <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">filter</span>(</span>
 <span id="cb2-4"><a href="#cb2-4"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
@@ -608,7 +608,7 @@ cookieconsent.run({
 <span id="cb4-21"><a href="#cb4-21"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Race/Ethnicity &amp; Defect Type"</span>,</span>
 <span id="cb4-22"><a href="#cb4-22"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
 <span id="cb4-23"><a href="#cb4-23"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb4-24"><a href="#cb4-24"></a>    <span class="at">y =</span> <span class="st">"Prevalence per 10,000 live births"</span>,</span>
+<span id="cb4-24"><a href="#cb4-24"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births (2016–2020 sum)"</span>,</span>
 <span id="cb4-25"><a href="#cb4-25"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
 <span id="cb4-26"><a href="#cb4-26"></a>  ) <span class="sc">+</span></span>
 <span id="cb4-27"><a href="#cb4-27"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
@@ -641,10 +641,10 @@ cookieconsent.run({
 <span id="cb5-4"><a href="#cb5-4"></a>    Category <span class="sc">!=</span> <span class="st">"All ages"</span></span>
 <span id="cb5-5"><a href="#cb5-5"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">summarize</span>(<span class="at">avg_prevalence =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">summarize</span>(<span class="at">total_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;20"</span>, <span class="st">"20-24"</span>, <span class="st">"25-29"</span>, <span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"≥40"</span>)))</span>
 <span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> avg_prevalence, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total_prevalence, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
 <span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
 <span id="cb5-12"><a href="#cb5-12"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
 <span id="cb5-13"><a href="#cb5-13"></a>    <span class="st">"&lt;20"</span>   <span class="ot">=</span> <span class="st">"#C6DBEF"</span>,</span>
@@ -656,9 +656,9 @@ cookieconsent.run({
 <span id="cb5-19"><a href="#cb5-19"></a>  )) <span class="sc">+</span></span>
 <span id="cb5-20"><a href="#cb5-20"></a>  <span class="fu">labs</span>(</span>
 <span id="cb5-21"><a href="#cb5-21"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Maternal Age Group"</span>,</span>
-<span id="cb5-22"><a href="#cb5-22"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22"></a>    <span class="at">subtitle =</span> <span class="st">"Total prevalence per 10,000 live births, 2016–2020"</span>,</span>
 <span id="cb5-23"><a href="#cb5-23"></a>    <span class="at">x =</span> <span class="st">"Maternal Age Group"</span>,</span>
-<span id="cb5-24"><a href="#cb5-24"></a>    <span class="at">y =</span> <span class="st">"Avg prevalence per 10,000 live births"</span></span>
+<span id="cb5-24"><a href="#cb5-24"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births"</span></span>
 <span id="cb5-25"><a href="#cb5-25"></a>  ) <span class="sc">+</span></span>
 <span id="cb5-26"><a href="#cb5-26"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb5-27"><a href="#cb5-27"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, </span>
@@ -1187,7 +1187,7 @@ cookieconsent.run({
 <span id="cb6-20"><a href="#cb6-20"></a><span class="fu">## Folic Acid Supplementation by Education Level</span></span>
 <span id="cb6-21"><a href="#cb6-21"></a></span>
 <span id="cb6-24"><a href="#cb6-24"></a><span class="in">```{r}</span></span>
-<span id="cb6-25"><a href="#cb6-25"></a><span class="co"># Averaged across 2016-2022 (to match the source chart)</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a><span class="co"># Averaged across 2016-2022</span></span>
 <span id="cb6-26"><a href="#cb6-26"></a>folic_ed <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span></span>
 <span id="cb6-27"><a href="#cb6-27"></a>  <span class="fu">filter</span>(</span>
 <span id="cb6-28"><a href="#cb6-28"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
@@ -1310,7 +1310,7 @@ cookieconsent.run({
 <span id="cb6-149"><a href="#cb6-149"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Race/Ethnicity &amp; Defect Type"</span>,</span>
 <span id="cb6-150"><a href="#cb6-150"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
 <span id="cb6-151"><a href="#cb6-151"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb6-152"><a href="#cb6-152"></a>    <span class="at">y =</span> <span class="st">"Prevalence per 10,000 live births"</span>,</span>
+<span id="cb6-152"><a href="#cb6-152"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births (2016–2020 sum)"</span>,</span>
 <span id="cb6-153"><a href="#cb6-153"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
 <span id="cb6-154"><a href="#cb6-154"></a>  ) <span class="sc">+</span></span>
 <span id="cb6-155"><a href="#cb6-155"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
@@ -1335,10 +1335,10 @@ cookieconsent.run({
 <span id="cb6-176"><a href="#cb6-176"></a>    Category <span class="sc">!=</span> <span class="st">"All ages"</span></span>
 <span id="cb6-177"><a href="#cb6-177"></a>  ) <span class="sc">%&gt;%</span></span>
 <span id="cb6-178"><a href="#cb6-178"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb6-179"><a href="#cb6-179"></a>  <span class="fu">summarize</span>(<span class="at">avg_prevalence =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-179"><a href="#cb6-179"></a>  <span class="fu">summarize</span>(<span class="at">total_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb6-180"><a href="#cb6-180"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;20"</span>, <span class="st">"20-24"</span>, <span class="st">"25-29"</span>, <span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"≥40"</span>)))</span>
 <span id="cb6-181"><a href="#cb6-181"></a></span>
-<span id="cb6-182"><a href="#cb6-182"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> avg_prevalence, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
+<span id="cb6-182"><a href="#cb6-182"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total_prevalence, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
 <span id="cb6-183"><a href="#cb6-183"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
 <span id="cb6-184"><a href="#cb6-184"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
 <span id="cb6-185"><a href="#cb6-185"></a>    <span class="st">"&lt;20"</span>   <span class="ot">=</span> <span class="st">"#C6DBEF"</span>,</span>
@@ -1350,9 +1350,9 @@ cookieconsent.run({
 <span id="cb6-191"><a href="#cb6-191"></a>  )) <span class="sc">+</span></span>
 <span id="cb6-192"><a href="#cb6-192"></a>  <span class="fu">labs</span>(</span>
 <span id="cb6-193"><a href="#cb6-193"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Maternal Age Group"</span>,</span>
-<span id="cb6-194"><a href="#cb6-194"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
+<span id="cb6-194"><a href="#cb6-194"></a>    <span class="at">subtitle =</span> <span class="st">"Total prevalence per 10,000 live births, 2016–2020"</span>,</span>
 <span id="cb6-195"><a href="#cb6-195"></a>    <span class="at">x =</span> <span class="st">"Maternal Age Group"</span>,</span>
-<span id="cb6-196"><a href="#cb6-196"></a>    <span class="at">y =</span> <span class="st">"Avg prevalence per 10,000 live births"</span></span>
+<span id="cb6-196"><a href="#cb6-196"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births"</span></span>
 <span id="cb6-197"><a href="#cb6-197"></a>  ) <span class="sc">+</span></span>
 <span id="cb6-198"><a href="#cb6-198"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
 <span id="cb6-199"><a href="#cb6-199"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, </span>
