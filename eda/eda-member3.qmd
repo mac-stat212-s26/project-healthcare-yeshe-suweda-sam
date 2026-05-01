@@ -18,7 +18,7 @@ maternal_master <- read.csv('../data/raw/Birth Defects_Maternal Characteristics.
 ## Folic Acid Supplementation by Education Level
 
 ```{r}
-# Averaged across 2016-2022 (to match the source chart)
+# Averaged across 2016-2022
 folic_ed <- folic_master %>%
   filter(
     Subtopic == "Folic Acid Use",
@@ -141,7 +141,7 @@ ggplot(maternal_stacked, aes(x = reorder(Category, total),  # orders by total no
     title = "Birth Defect Prevalence by Race/Ethnicity & Defect Type",
     subtitle = "Per 10,000 live births, 2016–2020",
     x = NULL,
-    y = "Prevalence per 10,000 live births",
+    y = "Total prevalence per 10,000 live births (2016–2020 sum)",
     fill = "Defect type"
   ) +
   theme_minimal() +
@@ -167,10 +167,10 @@ maternal_age_bar <- maternal_master %>%
     Category != "All ages"
   ) %>%
   group_by(Category) %>%
-  summarize(avg_prevalence = mean(Value, na.rm = TRUE)) %>%
+  summarize(total_prevalence = sum(Value, na.rm = TRUE)) %>%
   mutate(Category = factor(Category, levels = c("<20", "20-24", "25-29", "30-34", "35-39", "≥40")))
 
-ggplot(maternal_age_bar, aes(x = Category, y = avg_prevalence, fill = Category)) +
+ggplot(maternal_age_bar, aes(x = Category, y = total_prevalence, fill = Category)) +
   geom_col(width = 0.6) +
   scale_fill_manual(values = c(
     "<20"   = "#C6DBEF",
@@ -182,9 +182,9 @@ ggplot(maternal_age_bar, aes(x = Category, y = avg_prevalence, fill = Category))
   )) +
   labs(
     title = "Birth Defect Prevalence by Maternal Age Group",
-    subtitle = "Per 10,000 live births, 2016–2020",
+    subtitle = "Total prevalence per 10,000 live births, 2016–2020",
     x = "Maternal Age Group",
-    y = "Avg prevalence per 10,000 live births"
+    y = "Total prevalence per 10,000 live births"
   ) +
   theme_minimal() +
   theme(legend.position = "none", 
