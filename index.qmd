@@ -34,7 +34,10 @@ Then finally in 1998 and onwards, the folic acid fortification for grain product
 Despite the fortification policy, the daily supplementation rates varied drastically by education and poverty levels among Minnesota mothers (2016-2022). 
 
 ```{r}
+library(tidyverse)
 library(tidytext)
+
+folic_master <- read.csv('data/raw/Birth Defects_Folic Acid.csv')
 
 folic_master %>%
   filter(
@@ -86,6 +89,8 @@ point in the same direction, suggesting a compounding disadvantage. Mothers who 
 ## Birth Defect Prevalence by Race/Ethnicity
 When looking at the birth defect outcomes by maternal race/ethnicity in Minnesota (2016–2020), the disparities reflected smth smth
 ```{r}
+maternal_master <- read.csv('data/raw/Birth Defects_Maternal Characteristics.csv')
+
 maternal_stacked <- maternal_master %>%
   filter(
     Variable == "Maternal race/ethnicity",
@@ -123,6 +128,8 @@ American Indian or Alaska Native and Black/non-Hispanic mothers have the highest
 
 
 ```{r}
+rates <- read.csv('data/raw/Birth Defects_ntd_rates_data.csv')
+
 rates_clean <- rates %>%
   select(Year, Value, Category, Note) 
 
