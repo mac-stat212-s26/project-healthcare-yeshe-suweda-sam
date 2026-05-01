@@ -1,25 +1,26 @@
-# Birth Defects
+# About this Repository
 
-## Motivation
+This repository contains the data and code for our birth defects project for STAT/COMP 212.
 
+**index.qmd** contains the clean, complete code for our final report. 
 
-## Research Questions
+The **data** subdirectory contains the raw data, accessed from Minnesota Department of Health on 4-21-2026:
 
-## Background
+**appx/proposal** is our initial plan and proposal for this project.
 
-**Folate** is a B vitamin that's present in a lot of common foods. **Folic acid** is a form of folate that's known for assisting in cell growth and reproduction.
+**appx/case-study** is our analysis of a Pudding article.
 
-Data in the 1980s recommended increasing folate intake, but in the early 1990s, the officially recommended intake was *decreased.* 
-A 1991 study presented a 71% 
+The **eda** subdirectory contains our individual explorations and analyses of the data.
 
-## Data
+# Requirements
+This was created for R 4.2.2, and RStudio (edition here)
 
-The data came from Minnesota Department of Health, and is publicly accessible.
+# How to Use
 
+Install R and RStudio.
 
+Clone this repository to your machine, find it in your file navigation systems, and open it by selecting the **project** file.
 
-## Data Insights
+In the packages tab, navigate to 'Restore' to **restore** the packages from the virtual environment.
 
-## Conclusions
-
-## Limitations and Future Work
+Run the code in **index.qmd.**
