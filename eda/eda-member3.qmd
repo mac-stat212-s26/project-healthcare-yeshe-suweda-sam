@@ -13,6 +13,7 @@ library(gtsummary)
 
 folic_master <- read.csv('../data/raw/Birth Defects_Folic Acid.csv')
 maternal_master <- read.csv('../data/raw/Birth Defects_Maternal Characteristics.csv')
+gastroschisis <- read.csv('../data/raw/Birth Defects_gastroschisis_mat_age_data.csv')
 ```
 
 ## Folic Acid Supplementation by Education Level
@@ -60,6 +61,52 @@ ggplot(folic_ed_avg, aes(x = Category, y = pct)) +
 > Folic acid supplementation rates increase with education level, but not linearly.
 > Mothers with less than a high school education (\~23%) and high school only (\~21%) show lower daily supplementation rates, while it jumps to \~33% for some college education and to \~53% for college or more.
 > The 32.6 percentage gap between the lowest and highest education groups suggests that supplementation behavior is very likely tied to the level of education earned, suggesting the intertwinedness health literacy and access to prenatal care.
+
+## Birth Defect Type Prevalence
+
+```{r}
+
+prevalence_combined <- prevalence_combined %>%
+  mutate(severity_num = as.numeric(fct_rev(severity)))  
+
+ggplot(prevalence_combined, 
+       aes(x = reorder(Label, Value), 
+           y = Value, fill = severity_num)) +
+  geom_col(width = 0.7) +
+  geom_col(data = filter(prevalence_combined, defect_group == "Neural Tube Defect"),
+           width = 0.7, color = "red", linewidth = 1.1
+           ) +
+  coord_flip() +
+  scale_fill_viridis_c(option = "viridis", 
+                       direction = -1, 
+                       labels = c("Fatal/Severe", "Serious/Lifelong", "Significant/Variable", "Treatable/Correctable")
+                       ) +
+  guides(fill = guide_colorbar(reverse = TRUE)) +
+  labs(
+    title = "Birth Defect Conditions by Severity",
+    subtitle = "Types of NTDs highlighted/outlined in red",
+    x = NULL,
+    y = "Prevalence per 10,000 live births",
+    fill = "Severity Level"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold", size = 13),
+    plot.subtitle = element_text(color = "grey40", size = 10),
+    axis.text.y = element_text(size = 9, color = label_colors),
+    legend.title = element_text(size = 11, margin = margin(b = 15)),
+    legend.text = element_text(size = 9),
+    legend.key.size = unit(0.5, "cm")
+  )
+```
+
+> Neural Tube Defects are among the most serious and fatal types of birth defects.
+> Although conditions like down Syndrome and cleft lip/palate are much more common, they are often treatable and manageable.
+> Meanwhile spina bifida and anencephalus–which are both types of NTDs–are much less prevalent but fall at the most severe end of the spectrum. 
+>
+> Spina bifida is a lifelong condition with high vulnerability for paralysis, learning disabilities, and other complications.
+> Anencephalus is almost always fatal as babies are born with large missing parts of their brain and skull.
+> Both of these conditions are highly serious despite its lower prevalence.
 
 ## Education & Poverty Level (Socioeconomic factors)
 
@@ -160,36 +207,49 @@ ggplot(maternal_stacked, aes(x = reorder(Category, total),  # orders by total no
 ## Birth Defect Prevalence (Overall) by Maternal Age
 
 ```{r}
+gastroschisis_clean <- gastroschisis %>%
+  mutate(Note = "Gastroschisis")
 
-maternal_age_bar <- maternal_master %>%
+maternal_age_bar <- bind_rows(maternal_master, gastroschisis_clean) %>%
   filter(
     Variable == "Maternal age",
     Category != "All ages"
   ) %>%
-  group_by(Category) %>%
-  summarize(total_prevalence = sum(Value, na.rm = TRUE)) %>%
+  group_by(Category, Note) %>%
+  summarize(total_prevalence = sum(Value, na.rm = TRUE), .groups = "drop") %>%
   mutate(Category = factor(Category, levels = c("<20", "20-24", "25-29", "30-34", "35-39", "≥40")))
 
-ggplot(maternal_age_bar, aes(x = Category, y = total_prevalence, fill = Category)) +
+age_totals <- maternal_age_bar %>%
+  group_by(Category) %>%
+  summarize(total = sum(total_prevalence), .groups = "drop")
+
+ggplot(maternal_age_bar, aes(x = Category, y = total_prevalence, fill = Note)) +
   geom_col(width = 0.6) +
+  geom_text(
+    data = age_totals,
+    aes(x = Category, y = total, label = round(total, 1)),
+    inherit.aes = FALSE,
+    vjust = -0.5, size = 3.5, fontface = "bold", color = "grey20"
+  ) +
+  scale_y_continuous(expand = expansion(mult = c(0, 0.1))) +
   scale_fill_manual(values = c(
-    "<20"   = "#C6DBEF",
-    "20-24" = "#9ECAE1",
-    "25-29" = "#6BAED6",
-    "30-34" = "#3182BD",
-    "35-39" = "#1B5FA8",
-    "≥40"   = "#08306B"
+    "Chromosomal"                          = "#08306B",
+    "Musculoskeletal  (Muscles and Bones)" = "#3182BD",
+    "Gastroschisis"                        = "#85B7EB"
   )) +
   labs(
     title = "Birth Defect Prevalence by Maternal Age Group",
     subtitle = "Total prevalence per 10,000 live births, 2016–2020",
     x = "Maternal Age Group",
-    y = "Total prevalence per 10,000 live births"
+    y = "Total prevalence per 10,000 live births",
+    fill = "Defect type"
   ) +
   theme_minimal() +
-  theme(legend.position = "none", 
-        plot.title = element_text(face = "bold", size = 13)
-        )
+  theme(
+    plot.title = element_text(face = "bold", size = 13),
+    legend.text = element_text(size = 9),
+    legend.key.size = unit(0.4, "cm")
+  )
 ```
 
 > Birth defect prevalence follows a slight U-shaped curve pattern by maternal age where the highest rates appear at the extremes, mothers under 20 and mothers 40 or older.
