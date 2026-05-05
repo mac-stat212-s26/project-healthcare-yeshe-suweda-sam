@@ -64,7 +64,7 @@ ggplot(folic_ed_avg, aes(x = Category, y = pct)) +
 
 ## Birth Defect Type Prevalence
 
-```{r}
+```{r eval=FALSE}
 
 prevalence_combined <- prevalence_combined %>%
   mutate(severity_num = as.numeric(fct_rev(severity)))  
