@@ -33,7 +33,7 @@ Then finally in 1998 and onwards, the folic acid fortification for grain product
 ## Supplementation: Education & Poverty Gaps
 Despite the fortification policy, the daily supplementation rates varied drastically by education and poverty levels among Minnesota mothers (2016-2022). 
 
-```{r}
+```{r echo = FALSE}
 library(tidyverse)
 library(tidytext)
 
@@ -88,7 +88,7 @@ point in the same direction, suggesting a compounding disadvantage. Mothers who 
 
 ## Birth Defect Prevalence by Race/Ethnicity
 When looking at the birth defect outcomes by maternal race/ethnicity in Minnesota (2016–2020), the disparities reflected smth smth
-```{r}
+```{r echo = FALSE}
 maternal_master <- read.csv('data/raw/Birth Defects_Maternal Characteristics.csv')
 
 maternal_stacked <- maternal_master %>%
@@ -127,18 +127,25 @@ ggplot(maternal_stacked, aes(x = reorder(Category, total),
 American Indian or Alaska Native and Black/non-Hispanic mothers have the highest burden in overall birth defect. These groups are those that also face disproportionate socioeconomic barriers, which is consistent with the supplementation gaps we observed for those of lower education and higher poverty levels.
 
 
-```{r}
-rates <- read.csv('data/raw/Birth Defects_ntd_rates_data.csv')
+```{r echo = FALSE}
+folic_master <- read.csv('data/raw/Birth Defects_Folic Acid.csv')
 
-rates_clean <- rates %>%
-  select(Year, Value, Category, Note) 
+ntd_prevalence <- folic_master %>% 
+  filter(Subtopic == "Neural tube defects") %>% 
+  mutate(year = as.numeric(Year))
 
-  ggplot(rates_clean, aes(x = Year, y = Value, shape = Category)) +
-    annotate("rect", xmin = 1995, xmax = 1997, ymin = 2, ymax = 12, alpha = 0.5, fill = "purple") +
-    annotate("rect", xmin = 1997, xmax = 2011, ymin = 2, ymax = 12, alpha = 0.5, fill = "yellow") +
-    geom_point() +
-    geom_smooth(se = FALSE) +
-    theme_classic()
+avg_ntd_prevalence <- ntd_prevalence %>%
+  group_by(year) %>%
+  summarize(Value = mean(Value)) %>%
+  mutate(Category = "Average")
+
+ggplot(ntd_master, aes(x = year, y = Value)) +
+  annotate("rect", xmin = 1995, xmax = 1997, ymin = 2, ymax = 12, alpha = 0.5, fill = "grey") +
+  geom_smooth(aes(color = Category, linetype = Category), se = FALSE) +
+  scale_color_viridis_d() +
+  scale_linetype_manual(values = c(2, 1, 1, 1)) +
+  labs(x = 'Year', y = 'NTD Prevalence per 100,000 Live Births', title = 'Neural Tube Defect Prevalence by Year and Race', caption = 'via MN Department of Health') +
+  theme_classic()
 ```
 For neural tube defects specifically, Hispanic populations are seen to experience the highest NTD prevalence in Minnesota, even despite the racial gap narrowing after the 1998 fortification. Meanwhile, black/non-Hispanic mothers show the lowest rates of NTDs.
 
