@@ -326,7 +326,7 @@ cookieconsent.run({
       <img src="../assets/sidebar-logo.png" alt="Random negative space illustration" class="sidebar-logo dark-content py-0 d-lg-inline d-none">
       </a>
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">Team Name</a> 
+      <a href="../">Birth Defects Project</a> 
         <div class="sidebar-tools-main">
   <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
   <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
@@ -423,6 +423,7 @@ cookieconsent.run({
   <ul>
   <li><a href="#load-in-data" id="toc-load-in-data" class="nav-link active" data-scroll-target="#load-in-data">Load in data</a></li>
   <li><a href="#folic-acid-supplementation-by-education-level" id="toc-folic-acid-supplementation-by-education-level" class="nav-link" data-scroll-target="#folic-acid-supplementation-by-education-level">Folic Acid Supplementation by Education Level</a></li>
+  <li><a href="#birth-defect-type-prevalence" id="toc-birth-defect-type-prevalence" class="nav-link" data-scroll-target="#birth-defect-type-prevalence">Birth Defect Type Prevalence</a></li>
   <li><a href="#education-poverty-level-socioeconomic-factors" id="toc-education-poverty-level-socioeconomic-factors" class="nav-link" data-scroll-target="#education-poverty-level-socioeconomic-factors">Education &amp; Poverty Level (Socioeconomic factors)</a></li>
   <li><a href="#maternal-ethnicityrace-birth-defect-type-overall" id="toc-maternal-ethnicityrace-birth-defect-type-overall" class="nav-link" data-scroll-target="#maternal-ethnicityrace-birth-defect-type-overall">Maternal Ethnicity/Race &amp; Birth Defect Type (Overall)</a></li>
   <li><a href="#birth-defect-prevalence-overall-by-maternal-age" id="toc-birth-defect-prevalence-overall-by-maternal-age" class="nav-link" data-scroll-target="#birth-defect-prevalence-overall-by-maternal-age">Birth Defect Prevalence (Overall) by Maternal Age</a></li>
@@ -461,7 +462,8 @@ cookieconsent.run({
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(gtsummary)</span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
 <span id="cb1-4"><a href="#cb1-4"></a>folic_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Folic Acid.csv'</span>)</span>
-<span id="cb1-5"><a href="#cb1-5"></a>maternal_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Maternal Characteristics.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5"></a>maternal_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Maternal Characteristics.csv'</span>)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>gastroschisis <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_gastroschisis_mat_age_data.csv'</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -520,54 +522,98 @@ cookieconsent.run({
 <p>Folic acid supplementation rates increase with education level, but not linearly. Mothers with less than a high school education (~23%) and high school only (~21%) show lower daily supplementation rates, while it jumps to ~33% for some college education and to ~53% for college or more. The 32.6 percentage gap between the lowest and highest education groups suggests that supplementation behavior is very likely tied to the level of education earned, suggesting the intertwinedness health literacy and access to prenatal care.</p>
 </blockquote>
 </section>
+<section id="birth-defect-type-prevalence" class="level2">
+<h2 class="anchored" data-anchor-id="birth-defect-type-prevalence">Birth Defect Type Prevalence</h2>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>prevalence_combined <span class="ot">&lt;-</span> prevalence_combined <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">mutate</span>(<span class="at">severity_num =</span> <span class="fu">as.numeric</span>(<span class="fu">fct_rev</span>(severity)))  </span>
+<span id="cb3-3"><a href="#cb3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="fu">ggplot</span>(prevalence_combined, </span>
+<span id="cb3-5"><a href="#cb3-5"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Label, Value), </span>
+<span id="cb3-6"><a href="#cb3-6"></a>           <span class="at">y =</span> Value, <span class="at">fill =</span> severity_num)) <span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a>  <span class="fu">geom_col</span>(<span class="at">data =</span> <span class="fu">filter</span>(prevalence_combined, defect_group <span class="sc">==</span> <span class="st">"Neural Tube Defect"</span>),</span>
+<span id="cb3-9"><a href="#cb3-9"></a>           <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>           ) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"viridis"</span>, </span>
+<span id="cb3-13"><a href="#cb3-13"></a>                       <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb3-14"><a href="#cb3-14"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Fatal/Severe"</span>, <span class="st">"Serious/Lifelong"</span>, <span class="st">"Significant/Variable"</span>, <span class="st">"Treatable/Correctable"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15"></a>                       ) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_colorbar</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb3-17"><a href="#cb3-17"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-18"><a href="#cb3-18"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Conditions by Severity"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19"></a>    <span class="at">subtitle =</span> <span class="st">"Types of NTDs highlighted/outlined in red"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb3-21"><a href="#cb3-21"></a>    <span class="at">y =</span> <span class="st">"Prevalence per 10,000 live births"</span>,</span>
+<span id="cb3-22"><a href="#cb3-22"></a>    <span class="at">fill =</span> <span class="st">"Severity Level"</span></span>
+<span id="cb3-23"><a href="#cb3-23"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-24"><a href="#cb3-24"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-25"><a href="#cb3-25"></a>  <span class="fu">theme</span>(</span>
+<span id="cb3-26"><a href="#cb3-26"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb3-27"><a href="#cb3-27"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey40"</span>, <span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb3-28"><a href="#cb3-28"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">color =</span> label_colors),</span>
+<span id="cb3-29"><a href="#cb3-29"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">15</span>)),</span>
+<span id="cb3-30"><a href="#cb3-30"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb3-31"><a href="#cb3-31"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>)</span>
+<span id="cb3-32"><a href="#cb3-32"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details>
+</div>
+<blockquote class="blockquote">
+<p>Neural Tube Defects are among the most serious and fatal types of birth defects. Although conditions like down Syndrome and cleft lip/palate are much more common, they are often treatable and manageable. Meanwhile spina bifida and anencephalus–which are both types of NTDs–are much less prevalent but fall at the most severe end of the spectrum.&nbsp;</p>
+<p>Spina bifida is a lifelong condition with high vulnerability for paralysis, learning disabilities, and other complications. Anencephalus is almost always fatal as babies are born with large missing parts of their brain and skull. Both of these conditions are highly serious despite its lower prevalence.</p>
+</blockquote>
+</section>
 <section id="education-poverty-level-socioeconomic-factors" class="level2">
 <h2 class="anchored" data-anchor-id="education-poverty-level-socioeconomic-factors">Education &amp; Poverty Level (Socioeconomic factors)</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a>folic_master <span class="sc">%&gt;%</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="fu">filter</span>(</span>
-<span id="cb3-5"><a href="#cb3-5"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    Variable <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Education Level"</span>, <span class="st">"Poverty Level"</span>)</span>
-<span id="cb3-7"><a href="#cb3-7"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a>  <span class="fu">group_by</span>(Variable, Category) <span class="sc">%&gt;%</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a>  <span class="fu">summarize</span>(<span class="at">pct =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-10"><a href="#cb3-10"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">reorder_within</span>(Category, pct, Variable)) <span class="sc">%&gt;%</span></span>
-<span id="cb3-11"><a href="#cb3-11"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pct, <span class="at">y =</span> Category, <span class="at">color =</span> Variable)) <span class="sc">+</span></span>
-<span id="cb3-12"><a href="#cb3-12"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">xend =</span> pct, <span class="at">yend =</span> Category), <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">color =</span> <span class="st">"grey80"</span>) <span class="sc">+</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb3-14"><a href="#cb3-14"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(pct, <span class="dv">1</span>), <span class="st">"%"</span>)), <span class="at">nudge_x =</span> <span class="dv">5</span>, <span class="at">size =</span> <span class="dv">3</span>,</span>
-<span id="cb3-15"><a href="#cb3-15"></a>            <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>  <span class="fu">scale_y_reordered</span>() <span class="sc">+</span></span>
-<span id="cb3-17"><a href="#cb3-17"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Education Level"</span> <span class="ot">=</span> <span class="st">"#185FA5"</span>, <span class="st">"Poverty Level"</span> <span class="ot">=</span> <span class="st">"#85B7EB"</span>)) <span class="sc">+</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">72</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">10</span>),</span>
-<span id="cb3-19"><a href="#cb3-19"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>  <span class="fu">facet_grid</span>(Variable <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">space =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a>  <span class="fu">labs</span>(</span>
-<span id="cb3-22"><a href="#cb3-22"></a>    <span class="at">title =</span> <span class="st">"Folic Acid Supplementation by Socioeconomic Factors, 2016-2022"</span>,</span>
-<span id="cb3-23"><a href="#cb3-23"></a>    <span class="at">x =</span> <span class="st">"Percent Taking Daily Folic Acid"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="cn">NULL</span></span>
-<span id="cb3-24"><a href="#cb3-24"></a>  ) <span class="sc">+</span></span>
-<span id="cb3-25"><a href="#cb3-25"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb3-26"><a href="#cb3-26"></a>  <span class="fu">theme</span>(</span>
-<span id="cb3-27"><a href="#cb3-27"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb3-28"><a href="#cb3-28"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb3-29"><a href="#cb3-29"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb3-30"><a href="#cb3-30"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,  </span>
-<span id="cb3-31"><a href="#cb3-31"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb3-32"><a href="#cb3-32"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"grey20"</span>),</span>
-<span id="cb3-33"><a href="#cb3-33"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey50"</span>),</span>
-<span id="cb3-34"><a href="#cb3-34"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-35"><a href="#cb3-35"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb3-36"><a href="#cb3-36"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey92"</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>),</span>
-<span id="cb3-37"><a href="#cb3-37"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">"lines"</span>)</span>
-<span id="cb3-38"><a href="#cb3-38"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a>folic_master <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">filter</span>(</span>
+<span id="cb4-5"><a href="#cb4-5"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6"></a>    Variable <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Education Level"</span>, <span class="st">"Poverty Level"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="fu">group_by</span>(Variable, Category) <span class="sc">%&gt;%</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>  <span class="fu">summarize</span>(<span class="at">pct =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">reorder_within</span>(Category, pct, Variable)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pct, <span class="at">y =</span> Category, <span class="at">color =</span> Variable)) <span class="sc">+</span></span>
+<span id="cb4-12"><a href="#cb4-12"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">xend =</span> pct, <span class="at">yend =</span> Category), <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">color =</span> <span class="st">"grey80"</span>) <span class="sc">+</span></span>
+<span id="cb4-13"><a href="#cb4-13"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(pct, <span class="dv">1</span>), <span class="st">"%"</span>)), <span class="at">nudge_x =</span> <span class="dv">5</span>, <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb4-15"><a href="#cb4-15"></a>            <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16"></a>  <span class="fu">scale_y_reordered</span>() <span class="sc">+</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Education Level"</span> <span class="ot">=</span> <span class="st">"#185FA5"</span>, <span class="st">"Poverty Level"</span> <span class="ot">=</span> <span class="st">"#85B7EB"</span>)) <span class="sc">+</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">72</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">10</span>),</span>
+<span id="cb4-19"><a href="#cb4-19"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a>  <span class="fu">facet_grid</span>(Variable <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">space =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>  <span class="fu">labs</span>(</span>
+<span id="cb4-22"><a href="#cb4-22"></a>    <span class="at">title =</span> <span class="st">"Folic Acid Supplementation by Socioeconomic Factors, 2016-2022"</span>,</span>
+<span id="cb4-23"><a href="#cb4-23"></a>    <span class="at">x =</span> <span class="st">"Percent Taking Daily Folic Acid"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="cn">NULL</span></span>
+<span id="cb4-24"><a href="#cb4-24"></a>  ) <span class="sc">+</span></span>
+<span id="cb4-25"><a href="#cb4-25"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb4-26"><a href="#cb4-26"></a>  <span class="fu">theme</span>(</span>
+<span id="cb4-27"><a href="#cb4-27"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb4-28"><a href="#cb4-28"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb4-29"><a href="#cb4-29"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb4-30"><a href="#cb4-30"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,  </span>
+<span id="cb4-31"><a href="#cb4-31"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb4-32"><a href="#cb4-32"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"grey20"</span>),</span>
+<span id="cb4-33"><a href="#cb4-33"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey50"</span>),</span>
+<span id="cb4-34"><a href="#cb4-34"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-35"><a href="#cb4-35"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb4-36"><a href="#cb4-36"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey92"</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>),</span>
+<span id="cb4-37"><a href="#cb4-37"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">"lines"</span>)</span>
+<span id="cb4-38"><a href="#cb4-38"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="eda-member3_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="eda-member3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -585,43 +631,43 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Chart 1: SUM OF ALL</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>maternal_stacked <span class="ot">&lt;-</span> maternal_master <span class="sc">%&gt;%</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">filter</span>(</span>
-<span id="cb4-4"><a href="#cb4-4"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal race/ethnicity"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5"></a>    <span class="sc">!</span>Category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"All races/ethnicities combined"</span>, <span class="st">"Other/Unknown"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>  <span class="fu">group_by</span>(Category, Note) <span class="sc">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a>  <span class="fu">summarize</span>(<span class="at">avg_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="fu">mutate</span>(<span class="at">Note =</span> <span class="fu">str_remove</span>(Note, <span class="st">" </span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)"</span>), <span class="at">Category =</span> <span class="fu">str_remove</span>(Category, <span class="st">",? Non-Hispanic| Non-Hispanic|/Non-Hispanic"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb4-11"><a href="#cb4-11"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> <span class="fu">sum</span>(avg_prevalence)) <span class="sc">%&gt;%</span>  <span class="co"># adds total for ordering</span></span>
-<span id="cb4-12"><a href="#cb4-12"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb4-13"><a href="#cb4-13"></a></span>
-<span id="cb4-14"><a href="#cb4-14"></a><span class="fu">ggplot</span>(maternal_stacked, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Category, total),  <span class="co"># orders by total now</span></span>
-<span id="cb4-15"><a href="#cb4-15"></a>                              <span class="at">y =</span> avg_prevalence, </span>
-<span id="cb4-16"><a href="#cb4-16"></a>                              <span class="at">fill =</span> Note)) <span class="sc">+</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb4-18"><a href="#cb4-18"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb4-19"><a href="#cb4-19"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"viridis"</span>) <span class="sc">+</span></span>
-<span id="cb4-20"><a href="#cb4-20"></a>  <span class="fu">labs</span>(</span>
-<span id="cb4-21"><a href="#cb4-21"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Race/Ethnicity &amp; Defect Type"</span>,</span>
-<span id="cb4-22"><a href="#cb4-22"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
-<span id="cb4-23"><a href="#cb4-23"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb4-24"><a href="#cb4-24"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births (2016–2020 sum)"</span>,</span>
-<span id="cb4-25"><a href="#cb4-25"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
-<span id="cb4-26"><a href="#cb4-26"></a>  ) <span class="sc">+</span></span>
-<span id="cb4-27"><a href="#cb4-27"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb4-28"><a href="#cb4-28"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb4-29"><a href="#cb4-29"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb4-30"><a href="#cb4-30"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb4-31"><a href="#cb4-31"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>)</span>
-<span id="cb4-32"><a href="#cb4-32"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Chart 1: SUM OF ALL</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>maternal_stacked <span class="ot">&lt;-</span> maternal_master <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">filter</span>(</span>
+<span id="cb5-4"><a href="#cb5-4"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal race/ethnicity"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5"></a>    <span class="sc">!</span>Category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"All races/ethnicities combined"</span>, <span class="st">"Other/Unknown"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">group_by</span>(Category, Note) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">summarize</span>(<span class="at">avg_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>  <span class="fu">mutate</span>(<span class="at">Note =</span> <span class="fu">str_remove</span>(Note, <span class="st">" </span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)"</span>), <span class="at">Category =</span> <span class="fu">str_remove</span>(Category, <span class="st">",? Non-Hispanic| Non-Hispanic|/Non-Hispanic"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> <span class="fu">sum</span>(avg_prevalence)) <span class="sc">%&gt;%</span>  <span class="co"># adds total for ordering</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a><span class="fu">ggplot</span>(maternal_stacked, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Category, total),  <span class="co"># orders by total now</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a>                              <span class="at">y =</span> avg_prevalence, </span>
+<span id="cb5-16"><a href="#cb5-16"></a>                              <span class="at">fill =</span> Note)) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"viridis"</span>) <span class="sc">+</span></span>
+<span id="cb5-20"><a href="#cb5-20"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-21"><a href="#cb5-21"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Race/Ethnicity &amp; Defect Type"</span>,</span>
+<span id="cb5-22"><a href="#cb5-22"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb5-24"><a href="#cb5-24"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births (2016–2020 sum)"</span>,</span>
+<span id="cb5-25"><a href="#cb5-25"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
+<span id="cb5-26"><a href="#cb5-26"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-27"><a href="#cb5-27"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-28"><a href="#cb5-28"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb5-29"><a href="#cb5-29"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb5-30"><a href="#cb5-30"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb5-31"><a href="#cb5-31"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>)</span>
+<span id="cb5-32"><a href="#cb5-32"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="eda-member3_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="eda-member3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -635,40 +681,54 @@ cookieconsent.run({
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>maternal_age_bar <span class="ot">&lt;-</span> maternal_master <span class="sc">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">filter</span>(</span>
-<span id="cb5-3"><a href="#cb5-3"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal age"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4"></a>    Category <span class="sc">!=</span> <span class="st">"All ages"</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>  <span class="fu">summarize</span>(<span class="at">total_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;20"</span>, <span class="st">"20-24"</span>, <span class="st">"25-29"</span>, <span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"≥40"</span>)))</span>
-<span id="cb5-9"><a href="#cb5-9"></a></span>
-<span id="cb5-10"><a href="#cb5-10"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total_prevalence, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb5-12"><a href="#cb5-12"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb5-13"><a href="#cb5-13"></a>    <span class="st">"&lt;20"</span>   <span class="ot">=</span> <span class="st">"#C6DBEF"</span>,</span>
-<span id="cb5-14"><a href="#cb5-14"></a>    <span class="st">"20-24"</span> <span class="ot">=</span> <span class="st">"#9ECAE1"</span>,</span>
-<span id="cb5-15"><a href="#cb5-15"></a>    <span class="st">"25-29"</span> <span class="ot">=</span> <span class="st">"#6BAED6"</span>,</span>
-<span id="cb5-16"><a href="#cb5-16"></a>    <span class="st">"30-34"</span> <span class="ot">=</span> <span class="st">"#3182BD"</span>,</span>
-<span id="cb5-17"><a href="#cb5-17"></a>    <span class="st">"35-39"</span> <span class="ot">=</span> <span class="st">"#1B5FA8"</span>,</span>
-<span id="cb5-18"><a href="#cb5-18"></a>    <span class="st">"≥40"</span>   <span class="ot">=</span> <span class="st">"#08306B"</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>  )) <span class="sc">+</span></span>
-<span id="cb5-20"><a href="#cb5-20"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-21"><a href="#cb5-21"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Maternal Age Group"</span>,</span>
-<span id="cb5-22"><a href="#cb5-22"></a>    <span class="at">subtitle =</span> <span class="st">"Total prevalence per 10,000 live births, 2016–2020"</span>,</span>
-<span id="cb5-23"><a href="#cb5-23"></a>    <span class="at">x =</span> <span class="st">"Maternal Age Group"</span>,</span>
-<span id="cb5-24"><a href="#cb5-24"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births"</span></span>
-<span id="cb5-25"><a href="#cb5-25"></a>  ) <span class="sc">+</span></span>
-<span id="cb5-26"><a href="#cb5-26"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb5-27"><a href="#cb5-27"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, </span>
-<span id="cb5-28"><a href="#cb5-28"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>)</span>
-<span id="cb5-29"><a href="#cb5-29"></a>        )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>gastroschisis_clean <span class="ot">&lt;-</span> gastroschisis <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">mutate</span>(<span class="at">Note =</span> <span class="st">"Gastroschisis"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a>maternal_age_bar <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(maternal_master, gastroschisis_clean) <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">filter</span>(</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal age"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    Category <span class="sc">!=</span> <span class="st">"All ages"</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">group_by</span>(Category, Note) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">summarize</span>(<span class="at">total_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;20"</span>, <span class="st">"20-24"</span>, <span class="st">"25-29"</span>, <span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"≥40"</span>)))</span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a>age_totals <span class="ot">&lt;-</span> maternal_age_bar <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">sum</span>(total_prevalence), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total_prevalence, <span class="at">fill =</span> Note)) <span class="sc">+</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb6-20"><a href="#cb6-20"></a>    <span class="at">data =</span> age_totals,</span>
+<span id="cb6-21"><a href="#cb6-21"></a>    <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total, <span class="at">label =</span> <span class="fu">round</span>(total, <span class="dv">1</span>)),</span>
+<span id="cb6-22"><a href="#cb6-22"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-23"><a href="#cb6-23"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"grey20"</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) <span class="sc">+</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb6-27"><a href="#cb6-27"></a>    <span class="st">"Chromosomal"</span>                          <span class="ot">=</span> <span class="st">"#08306B"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28"></a>    <span class="st">"Musculoskeletal  (Muscles and Bones)"</span> <span class="ot">=</span> <span class="st">"#3182BD"</span>,</span>
+<span id="cb6-29"><a href="#cb6-29"></a>    <span class="st">"Gastroschisis"</span>                        <span class="ot">=</span> <span class="st">"#85B7EB"</span></span>
+<span id="cb6-30"><a href="#cb6-30"></a>  )) <span class="sc">+</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-32"><a href="#cb6-32"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Maternal Age Group"</span>,</span>
+<span id="cb6-33"><a href="#cb6-33"></a>    <span class="at">subtitle =</span> <span class="st">"Total prevalence per 10,000 live births, 2016–2020"</span>,</span>
+<span id="cb6-34"><a href="#cb6-34"></a>    <span class="at">x =</span> <span class="st">"Maternal Age Group"</span>,</span>
+<span id="cb6-35"><a href="#cb6-35"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births"</span>,</span>
+<span id="cb6-36"><a href="#cb6-36"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-38"><a href="#cb6-38"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-39"><a href="#cb6-39"></a>  <span class="fu">theme</span>(</span>
+<span id="cb6-40"><a href="#cb6-40"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb6-41"><a href="#cb6-41"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb6-42"><a href="#cb6-42"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>)</span>
+<span id="cb6-43"><a href="#cb6-43"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="eda-member3_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="eda-member3_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1167,213 +1227,274 @@ cookieconsent.run({
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">---</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="an">title:</span><span class="co"> "Member 3 Yeshe J"</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="an">editor:</span><span class="co"> </span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="co">  markdown: </span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">    wrap: sentence</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co">---</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a></span>
-<span id="cb6-8"><a href="#cb6-8"></a><span class="fu">## Load in data</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a></span>
-<span id="cb6-12"><a href="#cb6-12"></a><span class="in">```{r}</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb6-14"><a href="#cb6-14"></a><span class="fu">library</span>(gtsummary)</span>
-<span id="cb6-15"><a href="#cb6-15"></a></span>
-<span id="cb6-16"><a href="#cb6-16"></a>folic_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Folic Acid.csv'</span>)</span>
-<span id="cb6-17"><a href="#cb6-17"></a>maternal_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Maternal Characteristics.csv'</span>)</span>
-<span id="cb6-18"><a href="#cb6-18"></a><span class="in">```</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a></span>
-<span id="cb6-20"><a href="#cb6-20"></a><span class="fu">## Folic Acid Supplementation by Education Level</span></span>
-<span id="cb6-21"><a href="#cb6-21"></a></span>
-<span id="cb6-24"><a href="#cb6-24"></a><span class="in">```{r}</span></span>
-<span id="cb6-25"><a href="#cb6-25"></a><span class="co"># Averaged across 2016-2022</span></span>
-<span id="cb6-26"><a href="#cb6-26"></a>folic_ed <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span></span>
-<span id="cb6-27"><a href="#cb6-27"></a>  <span class="fu">filter</span>(</span>
-<span id="cb6-28"><a href="#cb6-28"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
-<span id="cb6-29"><a href="#cb6-29"></a>    Variable <span class="sc">==</span> <span class="st">"Education Level"</span></span>
-<span id="cb6-30"><a href="#cb6-30"></a>  )</span>
-<span id="cb6-31"><a href="#cb6-31"></a>folic_ed_avg <span class="ot">&lt;-</span> folic_ed <span class="sc">%&gt;%</span></span>
-<span id="cb6-32"><a href="#cb6-32"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb6-33"><a href="#cb6-33"></a>  <span class="fu">summarize</span>(<span class="at">pct =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb6-34"><a href="#cb6-34"></a></span>
-<span id="cb6-35"><a href="#cb6-35"></a>folic_ed_avg <span class="ot">&lt;-</span> folic_ed_avg <span class="sc">%&gt;%</span></span>
-<span id="cb6-36"><a href="#cb6-36"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(</span>
-<span id="cb6-37"><a href="#cb6-37"></a>    <span class="st">"Less than high school"</span>,</span>
-<span id="cb6-38"><a href="#cb6-38"></a>    <span class="st">"High school"</span>,</span>
-<span id="cb6-39"><a href="#cb6-39"></a>    <span class="st">"Some college"</span>,</span>
-<span id="cb6-40"><a href="#cb6-40"></a>    <span class="st">"College or more"</span></span>
-<span id="cb6-41"><a href="#cb6-41"></a>  )))</span>
-<span id="cb6-42"><a href="#cb6-42"></a></span>
-<span id="cb6-43"><a href="#cb6-43"></a><span class="fu">ggplot</span>(folic_ed_avg, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> pct)) <span class="sc">+</span></span>
-<span id="cb6-44"><a href="#cb6-44"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#1B3A6B"</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb6-45"><a href="#cb6-45"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(pct, <span class="dv">1</span>), <span class="st">"%"</span>)),</span>
-<span id="cb6-46"><a href="#cb6-46"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb6-47"><a href="#cb6-47"></a>  <span class="fu">scale_y_continuous</span>(</span>
-<span id="cb6-48"><a href="#cb6-48"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">60</span>),</span>
-<span id="cb6-49"><a href="#cb6-49"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">10</span>),</span>
-<span id="cb6-50"><a href="#cb6-50"></a>    <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>))</span>
-<span id="cb6-51"><a href="#cb6-51"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-52"><a href="#cb6-52"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-53"><a href="#cb6-53"></a>    <span class="at">title =</span> <span class="st">"Percentage of Mothers Taking Folic Acid by Education, 2016–2022"</span>,</span>
-<span id="cb6-54"><a href="#cb6-54"></a>    <span class="at">x =</span> <span class="st">"Education Level"</span>,</span>
-<span id="cb6-55"><a href="#cb6-55"></a>    <span class="at">y =</span> <span class="st">"Percent Taking Daily Folic Acid"</span>,</span>
-<span id="cb6-56"><a href="#cb6-56"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-57"><a href="#cb6-57"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
-<span id="cb6-58"><a href="#cb6-58"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb6-59"><a href="#cb6-59"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb6-60"><a href="#cb6-60"></a>        <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"black"</span>)</span>
-<span id="cb6-61"><a href="#cb6-61"></a>        )</span>
-<span id="cb6-62"><a href="#cb6-62"></a><span class="in">```</span></span>
-<span id="cb6-63"><a href="#cb6-63"></a></span>
-<span id="cb6-64"><a href="#cb6-64"></a><span class="at">&gt; Folic acid supplementation rates increase with education level, but not linearly.</span></span>
-<span id="cb6-65"><a href="#cb6-65"></a><span class="at">&gt; Mothers with less than a high school education (\~23%) and high school only (\~21%) show lower daily supplementation rates, while it jumps to \~33% for some college education and to \~53% for college or more.</span></span>
-<span id="cb6-66"><a href="#cb6-66"></a><span class="at">&gt; The 32.6 percentage gap between the lowest and highest education groups suggests that supplementation behavior is very likely tied to the level of education earned, suggesting the intertwinedness health literacy and access to prenatal care.</span></span>
-<span id="cb6-67"><a href="#cb6-67"></a></span>
-<span id="cb6-68"><a href="#cb6-68"></a><span class="fu">## Education &amp; Poverty Level (Socioeconomic factors)</span></span>
-<span id="cb6-69"><a href="#cb6-69"></a></span>
-<span id="cb6-72"><a href="#cb6-72"></a><span class="in">```{r}</span></span>
-<span id="cb6-73"><a href="#cb6-73"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb6-74"><a href="#cb6-74"></a></span>
-<span id="cb6-75"><a href="#cb6-75"></a>folic_master <span class="sc">%&gt;%</span></span>
-<span id="cb6-76"><a href="#cb6-76"></a>  <span class="fu">filter</span>(</span>
-<span id="cb6-77"><a href="#cb6-77"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
-<span id="cb6-78"><a href="#cb6-78"></a>    Variable <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Education Level"</span>, <span class="st">"Poverty Level"</span>)</span>
-<span id="cb6-79"><a href="#cb6-79"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb6-80"><a href="#cb6-80"></a>  <span class="fu">group_by</span>(Variable, Category) <span class="sc">%&gt;%</span></span>
-<span id="cb6-81"><a href="#cb6-81"></a>  <span class="fu">summarize</span>(<span class="at">pct =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-82"><a href="#cb6-82"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">reorder_within</span>(Category, pct, Variable)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-83"><a href="#cb6-83"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pct, <span class="at">y =</span> Category, <span class="at">color =</span> Variable)) <span class="sc">+</span></span>
-<span id="cb6-84"><a href="#cb6-84"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">xend =</span> pct, <span class="at">yend =</span> Category), <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">color =</span> <span class="st">"grey80"</span>) <span class="sc">+</span></span>
-<span id="cb6-85"><a href="#cb6-85"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
-<span id="cb6-86"><a href="#cb6-86"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(pct, <span class="dv">1</span>), <span class="st">"%"</span>)), <span class="at">nudge_x =</span> <span class="dv">5</span>, <span class="at">size =</span> <span class="dv">3</span>,</span>
-<span id="cb6-87"><a href="#cb6-87"></a>            <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb6-88"><a href="#cb6-88"></a>  <span class="fu">scale_y_reordered</span>() <span class="sc">+</span></span>
-<span id="cb6-89"><a href="#cb6-89"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Education Level"</span> <span class="ot">=</span> <span class="st">"#185FA5"</span>, <span class="st">"Poverty Level"</span> <span class="ot">=</span> <span class="st">"#85B7EB"</span>)) <span class="sc">+</span></span>
-<span id="cb6-90"><a href="#cb6-90"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">72</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">10</span>),</span>
-<span id="cb6-91"><a href="#cb6-91"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb6-92"><a href="#cb6-92"></a>  <span class="fu">facet_grid</span>(Variable <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">space =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
-<span id="cb6-93"><a href="#cb6-93"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-94"><a href="#cb6-94"></a>    <span class="at">title =</span> <span class="st">"Folic Acid Supplementation by Socioeconomic Factors, 2016-2022"</span>,</span>
-<span id="cb6-95"><a href="#cb6-95"></a>    <span class="at">x =</span> <span class="st">"Percent Taking Daily Folic Acid"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="cn">NULL</span></span>
-<span id="cb6-96"><a href="#cb6-96"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-97"><a href="#cb6-97"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
-<span id="cb6-98"><a href="#cb6-98"></a>  <span class="fu">theme</span>(</span>
-<span id="cb6-99"><a href="#cb6-99"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
-<span id="cb6-100"><a href="#cb6-100"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
-<span id="cb6-101"><a href="#cb6-101"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
-<span id="cb6-102"><a href="#cb6-102"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,  </span>
-<span id="cb6-103"><a href="#cb6-103"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
-<span id="cb6-104"><a href="#cb6-104"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"grey20"</span>),</span>
-<span id="cb6-105"><a href="#cb6-105"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey50"</span>),</span>
-<span id="cb6-106"><a href="#cb6-106"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb6-107"><a href="#cb6-107"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb6-108"><a href="#cb6-108"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey92"</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>),</span>
-<span id="cb6-109"><a href="#cb6-109"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">"lines"</span>)</span>
-<span id="cb6-110"><a href="#cb6-110"></a>  )</span>
-<span id="cb6-111"><a href="#cb6-111"></a><span class="in">```</span></span>
-<span id="cb6-112"><a href="#cb6-112"></a></span>
-<span id="cb6-113"><a href="#cb6-113"></a><span class="at">&gt; The same pattern emerges when looking at poverty level.</span></span>
-<span id="cb6-114"><a href="#cb6-114"></a><span class="at">&gt; Low-poverty mothers supplement at \~50%, which is similar to the rate for college-educated mothers, while mothers who are in the moderate or high poverty groups hover \~24% for their supplementation rate.</span></span>
-<span id="cb6-115"><a href="#cb6-115"></a><span class="at">&gt; The fact that both education and poverty point towards the same direction suggests the existence of a compounding disadvantage.</span></span>
-<span id="cb6-116"><a href="#cb6-116"></a><span class="at">&gt; Mothers who are both low-income and less educated face the greatest barriers in adequate folic acid intake, which may explain the racial and socioeconomic disparities causing higher birth defect prevalence.</span></span>
-<span id="cb6-117"><a href="#cb6-117"></a><span class="at">&gt;</span></span>
-<span id="cb6-118"><a href="#cb6-118"></a><span class="at">&gt; **What does this mean for NTDs?** Since neural tube defects form in the first month of pregnancy, often before a mother knows she is pregnant, daily supplementation *before* conception is very critical!</span></span>
-<span id="cb6-119"><a href="#cb6-119"></a><span class="at">&gt; The populations least likely to supplement consistently also end up being the populations who are most exposed to NTD risk, not necessarily due to biology, but due to structural barriers.</span></span>
-<span id="cb6-120"><a href="#cb6-120"></a></span>
-<span id="cb6-121"><a href="#cb6-121"></a><span class="fu">## Maternal Ethnicity/Race &amp; Birth Defect Type (Overall)</span></span>
-<span id="cb6-122"><a href="#cb6-122"></a></span>
-<span id="cb6-123"><a href="#cb6-123"></a><span class="at">&gt; The next question is whether these supplementation gaps show up in actual birth defect outcomes.</span></span>
-<span id="cb6-124"><a href="#cb6-124"></a><span class="at">&gt; The following charts look at defect prevalence by race/ethnicity and maternal age as two dimensions that intersect closely with the education and poverty level patterns from earlier.</span></span>
-<span id="cb6-125"><a href="#cb6-125"></a></span>
-<span id="cb6-128"><a href="#cb6-128"></a><span class="in">```{r}</span></span>
-<span id="cb6-129"><a href="#cb6-129"></a><span class="co"># Chart 1: SUM OF ALL</span></span>
-<span id="cb6-130"><a href="#cb6-130"></a>maternal_stacked <span class="ot">&lt;-</span> maternal_master <span class="sc">%&gt;%</span></span>
-<span id="cb6-131"><a href="#cb6-131"></a>  <span class="fu">filter</span>(</span>
-<span id="cb6-132"><a href="#cb6-132"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal race/ethnicity"</span>,</span>
-<span id="cb6-133"><a href="#cb6-133"></a>    <span class="sc">!</span>Category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"All races/ethnicities combined"</span>, <span class="st">"Other/Unknown"</span>)</span>
-<span id="cb6-134"><a href="#cb6-134"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb6-135"><a href="#cb6-135"></a>  <span class="fu">group_by</span>(Category, Note) <span class="sc">%&gt;%</span></span>
-<span id="cb6-136"><a href="#cb6-136"></a>  <span class="fu">summarize</span>(<span class="at">avg_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-137"><a href="#cb6-137"></a>  <span class="fu">mutate</span>(<span class="at">Note =</span> <span class="fu">str_remove</span>(Note, <span class="st">" </span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)"</span>), <span class="at">Category =</span> <span class="fu">str_remove</span>(Category, <span class="st">",? Non-Hispanic| Non-Hispanic|/Non-Hispanic"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-138"><a href="#cb6-138"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb6-139"><a href="#cb6-139"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> <span class="fu">sum</span>(avg_prevalence)) <span class="sc">%&gt;%</span>  <span class="co"># adds total for ordering</span></span>
-<span id="cb6-140"><a href="#cb6-140"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb6-141"><a href="#cb6-141"></a></span>
-<span id="cb6-142"><a href="#cb6-142"></a><span class="fu">ggplot</span>(maternal_stacked, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Category, total),  <span class="co"># orders by total now</span></span>
-<span id="cb6-143"><a href="#cb6-143"></a>                              <span class="at">y =</span> avg_prevalence, </span>
-<span id="cb6-144"><a href="#cb6-144"></a>                              <span class="at">fill =</span> Note)) <span class="sc">+</span></span>
-<span id="cb6-145"><a href="#cb6-145"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb6-146"><a href="#cb6-146"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb6-147"><a href="#cb6-147"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"viridis"</span>) <span class="sc">+</span></span>
-<span id="cb6-148"><a href="#cb6-148"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-149"><a href="#cb6-149"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Race/Ethnicity &amp; Defect Type"</span>,</span>
-<span id="cb6-150"><a href="#cb6-150"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
-<span id="cb6-151"><a href="#cb6-151"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
-<span id="cb6-152"><a href="#cb6-152"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births (2016–2020 sum)"</span>,</span>
-<span id="cb6-153"><a href="#cb6-153"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
-<span id="cb6-154"><a href="#cb6-154"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-155"><a href="#cb6-155"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb6-156"><a href="#cb6-156"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
-<span id="cb6-157"><a href="#cb6-157"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
-<span id="cb6-158"><a href="#cb6-158"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
-<span id="cb6-159"><a href="#cb6-159"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>)</span>
-<span id="cb6-160"><a href="#cb6-160"></a>        )</span>
-<span id="cb6-161"><a href="#cb6-161"></a><span class="in">```</span></span>
-<span id="cb6-162"><a href="#cb6-162"></a></span>
-<span id="cb6-163"><a href="#cb6-163"></a><span class="at">&gt; American Indian/Alaska Native mothers carry the highest birth defect burden of any racial group in Minnesota, followed by Black/Non-Hispanic mothers.</span></span>
-<span id="cb6-164"><a href="#cb6-164"></a><span class="at">&gt; Cardiovascular defects are the majority of the across all groups, but these are also populations that face disproportionate socioeconomic barriers, which remain consistent with the supplementation gaps we saw before.</span></span>
-<span id="cb6-165"><a href="#cb6-165"></a><span class="at">&gt; Meanwhile, Asian or Pacific Islander mothers show the lowest overall prevalence.</span></span>
-<span id="cb6-166"><a href="#cb6-166"></a><span class="at">&gt; Note that NTDs are not included in this dataset and are analyzed separately.</span></span>
-<span id="cb6-167"><a href="#cb6-167"></a></span>
-<span id="cb6-168"><a href="#cb6-168"></a><span class="fu">## Birth Defect Prevalence (Overall) by Maternal Age</span></span>
-<span id="cb6-169"><a href="#cb6-169"></a></span>
-<span id="cb6-172"><a href="#cb6-172"></a><span class="in">```{r}</span></span>
-<span id="cb6-173"><a href="#cb6-173"></a>maternal_age_bar <span class="ot">&lt;-</span> maternal_master <span class="sc">%&gt;%</span></span>
-<span id="cb6-174"><a href="#cb6-174"></a>  <span class="fu">filter</span>(</span>
-<span id="cb6-175"><a href="#cb6-175"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal age"</span>,</span>
-<span id="cb6-176"><a href="#cb6-176"></a>    Category <span class="sc">!=</span> <span class="st">"All ages"</span></span>
-<span id="cb6-177"><a href="#cb6-177"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb6-178"><a href="#cb6-178"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
-<span id="cb6-179"><a href="#cb6-179"></a>  <span class="fu">summarize</span>(<span class="at">total_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-180"><a href="#cb6-180"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;20"</span>, <span class="st">"20-24"</span>, <span class="st">"25-29"</span>, <span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"≥40"</span>)))</span>
-<span id="cb6-181"><a href="#cb6-181"></a></span>
-<span id="cb6-182"><a href="#cb6-182"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total_prevalence, <span class="at">fill =</span> Category)) <span class="sc">+</span></span>
-<span id="cb6-183"><a href="#cb6-183"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb6-184"><a href="#cb6-184"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb6-185"><a href="#cb6-185"></a>    <span class="st">"&lt;20"</span>   <span class="ot">=</span> <span class="st">"#C6DBEF"</span>,</span>
-<span id="cb6-186"><a href="#cb6-186"></a>    <span class="st">"20-24"</span> <span class="ot">=</span> <span class="st">"#9ECAE1"</span>,</span>
-<span id="cb6-187"><a href="#cb6-187"></a>    <span class="st">"25-29"</span> <span class="ot">=</span> <span class="st">"#6BAED6"</span>,</span>
-<span id="cb6-188"><a href="#cb6-188"></a>    <span class="st">"30-34"</span> <span class="ot">=</span> <span class="st">"#3182BD"</span>,</span>
-<span id="cb6-189"><a href="#cb6-189"></a>    <span class="st">"35-39"</span> <span class="ot">=</span> <span class="st">"#1B5FA8"</span>,</span>
-<span id="cb6-190"><a href="#cb6-190"></a>    <span class="st">"≥40"</span>   <span class="ot">=</span> <span class="st">"#08306B"</span></span>
-<span id="cb6-191"><a href="#cb6-191"></a>  )) <span class="sc">+</span></span>
-<span id="cb6-192"><a href="#cb6-192"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-193"><a href="#cb6-193"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Maternal Age Group"</span>,</span>
-<span id="cb6-194"><a href="#cb6-194"></a>    <span class="at">subtitle =</span> <span class="st">"Total prevalence per 10,000 live births, 2016–2020"</span>,</span>
-<span id="cb6-195"><a href="#cb6-195"></a>    <span class="at">x =</span> <span class="st">"Maternal Age Group"</span>,</span>
-<span id="cb6-196"><a href="#cb6-196"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births"</span></span>
-<span id="cb6-197"><a href="#cb6-197"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-198"><a href="#cb6-198"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb6-199"><a href="#cb6-199"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>, </span>
-<span id="cb6-200"><a href="#cb6-200"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>)</span>
-<span id="cb6-201"><a href="#cb6-201"></a>        )</span>
-<span id="cb6-202"><a href="#cb6-202"></a><span class="in">```</span></span>
-<span id="cb6-203"><a href="#cb6-203"></a></span>
-<span id="cb6-204"><a href="#cb6-204"></a><span class="at">&gt; Birth defect prevalence follows a slight U-shaped curve pattern by maternal age where the highest rates appear at the extremes, mothers under 20 and mothers 40 or older.</span></span>
-<span id="cb6-205"><a href="#cb6-205"></a><span class="at">&gt; While mothers in their late 20s show the lowest amount of birth defect prevalance.</span></span>
-<span id="cb6-206"><a href="#cb6-206"></a><span class="at">&gt; The spike at older 40+ mothers is largely driven by chromosomal risks like Down syndrome.</span></span>
-<span id="cb6-207"><a href="#cb6-207"></a><span class="at">&gt; Meanwhile, teen mothers are also among the least likely to be supplementing with folic acid before conception, and are disproportionately represented in lower-income and lower-education groups.</span></span>
-<span id="cb6-208"><a href="#cb6-208"></a><span class="at">&gt; This makes the age at the youngest end another dimension of the same compounding disadvantage within this demographic.</span></span>
-<span id="cb6-209"><a href="#cb6-209"></a></span>
-<span id="cb6-210"><a href="#cb6-210"></a>------------------------------------------------------------------------</span>
-<span id="cb6-211"><a href="#cb6-211"></a></span>
-<span id="cb6-212"><a href="#cb6-212"></a>In our datasets there is a consistent pattern that emerges.</span>
-<span id="cb6-213"><a href="#cb6-213"></a>Groups with lower socioeconomic status and belonging to certain racial/ethnic minorities face compounding risks for birth defects.</span>
-<span id="cb6-214"><a href="#cb6-214"></a>Lower education and poverty predict a reduced folic acid supplementation, and Hispanic and Black mothers show both lower supplementation rates and higher NTD and overall birth defect prevalence respectively.</span>
-<span id="cb6-215"><a href="#cb6-215"></a>The 1998 folic acid fortification mandate reduced the NTD rates broadly but it did not close the racial gaps which point towards the structural barriers beyond food supply access that continue to affect maternal health outcomes in Minnesota.</span>
-<span id="cb6-216"><a href="#cb6-216"></a></span>
-<span id="cb6-217"><a href="#cb6-217"></a>Two key data limitations should be noted: NTD prevalence data is only available for Hispanic, White Non-Hispanic, and Black Non-Hispanic groups, so the NTD and overall birth defect datasets cannot be directly combined since they may use different measurement methods and time periods.</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" data-shortcodes="false"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">---</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="an">title:</span><span class="co"> "Member 3 Yeshe J"</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="an">editor:</span><span class="co"> </span></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co">  markdown: </span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">    wrap: sentence</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co">---</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">## Load in data</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="in">```{r}</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb7-14"><a href="#cb7-14"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb7-15"><a href="#cb7-15"></a></span>
+<span id="cb7-16"><a href="#cb7-16"></a>folic_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Folic Acid.csv'</span>)</span>
+<span id="cb7-17"><a href="#cb7-17"></a>maternal_master <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_Maternal Characteristics.csv'</span>)</span>
+<span id="cb7-18"><a href="#cb7-18"></a>gastroschisis <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'../data/raw/Birth Defects_gastroschisis_mat_age_data.csv'</span>)</span>
+<span id="cb7-19"><a href="#cb7-19"></a><span class="in">```</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a></span>
+<span id="cb7-21"><a href="#cb7-21"></a><span class="fu">## Folic Acid Supplementation by Education Level</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a></span>
+<span id="cb7-25"><a href="#cb7-25"></a><span class="in">```{r}</span></span>
+<span id="cb7-26"><a href="#cb7-26"></a><span class="co"># Averaged across 2016-2022</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a>folic_ed <span class="ot">&lt;-</span> folic_master <span class="sc">%&gt;%</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-29"><a href="#cb7-29"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
+<span id="cb7-30"><a href="#cb7-30"></a>    Variable <span class="sc">==</span> <span class="st">"Education Level"</span></span>
+<span id="cb7-31"><a href="#cb7-31"></a>  )</span>
+<span id="cb7-32"><a href="#cb7-32"></a>folic_ed_avg <span class="ot">&lt;-</span> folic_ed <span class="sc">%&gt;%</span></span>
+<span id="cb7-33"><a href="#cb7-33"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
+<span id="cb7-34"><a href="#cb7-34"></a>  <span class="fu">summarize</span>(<span class="at">pct =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb7-35"><a href="#cb7-35"></a></span>
+<span id="cb7-36"><a href="#cb7-36"></a>folic_ed_avg <span class="ot">&lt;-</span> folic_ed_avg <span class="sc">%&gt;%</span></span>
+<span id="cb7-37"><a href="#cb7-37"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(</span>
+<span id="cb7-38"><a href="#cb7-38"></a>    <span class="st">"Less than high school"</span>,</span>
+<span id="cb7-39"><a href="#cb7-39"></a>    <span class="st">"High school"</span>,</span>
+<span id="cb7-40"><a href="#cb7-40"></a>    <span class="st">"Some college"</span>,</span>
+<span id="cb7-41"><a href="#cb7-41"></a>    <span class="st">"College or more"</span></span>
+<span id="cb7-42"><a href="#cb7-42"></a>  )))</span>
+<span id="cb7-43"><a href="#cb7-43"></a></span>
+<span id="cb7-44"><a href="#cb7-44"></a><span class="fu">ggplot</span>(folic_ed_avg, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> pct)) <span class="sc">+</span></span>
+<span id="cb7-45"><a href="#cb7-45"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#1B3A6B"</span>, <span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb7-46"><a href="#cb7-46"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(pct, <span class="dv">1</span>), <span class="st">"%"</span>)),</span>
+<span id="cb7-47"><a href="#cb7-47"></a>            <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb7-48"><a href="#cb7-48"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb7-49"><a href="#cb7-49"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">60</span>),</span>
+<span id="cb7-50"><a href="#cb7-50"></a>    <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">50</span>, <span class="dv">10</span>),</span>
+<span id="cb7-51"><a href="#cb7-51"></a>    <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.05</span>))</span>
+<span id="cb7-52"><a href="#cb7-52"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-53"><a href="#cb7-53"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-54"><a href="#cb7-54"></a>    <span class="at">title =</span> <span class="st">"Percentage of Mothers Taking Folic Acid by Education, 2016–2022"</span>,</span>
+<span id="cb7-55"><a href="#cb7-55"></a>    <span class="at">x =</span> <span class="st">"Education Level"</span>,</span>
+<span id="cb7-56"><a href="#cb7-56"></a>    <span class="at">y =</span> <span class="st">"Percent Taking Daily Folic Acid"</span>,</span>
+<span id="cb7-57"><a href="#cb7-57"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-58"><a href="#cb7-58"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">13</span>) <span class="sc">+</span></span>
+<span id="cb7-59"><a href="#cb7-59"></a>  <span class="fu">theme</span>(<span class="at">panel.grid.major.x =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-60"><a href="#cb7-60"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-61"><a href="#cb7-61"></a>        <span class="at">axis.line.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"black"</span>)</span>
+<span id="cb7-62"><a href="#cb7-62"></a>        )</span>
+<span id="cb7-63"><a href="#cb7-63"></a><span class="in">```</span></span>
+<span id="cb7-64"><a href="#cb7-64"></a></span>
+<span id="cb7-65"><a href="#cb7-65"></a><span class="at">&gt; Folic acid supplementation rates increase with education level, but not linearly.</span></span>
+<span id="cb7-66"><a href="#cb7-66"></a><span class="at">&gt; Mothers with less than a high school education (\~23%) and high school only (\~21%) show lower daily supplementation rates, while it jumps to \~33% for some college education and to \~53% for college or more.</span></span>
+<span id="cb7-67"><a href="#cb7-67"></a><span class="at">&gt; The 32.6 percentage gap between the lowest and highest education groups suggests that supplementation behavior is very likely tied to the level of education earned, suggesting the intertwinedness health literacy and access to prenatal care.</span></span>
+<span id="cb7-68"><a href="#cb7-68"></a></span>
+<span id="cb7-69"><a href="#cb7-69"></a><span class="fu">## Birth Defect Type Prevalence</span></span>
+<span id="cb7-70"><a href="#cb7-70"></a></span>
+<span id="cb7-71"><a href="#cb7-71"></a><span class="in">```{r eval=FALSE}</span></span>
+<span id="cb7-72"><a href="#cb7-72"></a></span>
+<span id="cb7-73"><a href="#cb7-73"></a>prevalence_combined <span class="ot">&lt;-</span> prevalence_combined <span class="sc">%&gt;%</span></span>
+<span id="cb7-74"><a href="#cb7-74"></a>  <span class="fu">mutate</span>(<span class="at">severity_num =</span> <span class="fu">as.numeric</span>(<span class="fu">fct_rev</span>(severity)))  </span>
+<span id="cb7-75"><a href="#cb7-75"></a></span>
+<span id="cb7-76"><a href="#cb7-76"></a><span class="fu">ggplot</span>(prevalence_combined, </span>
+<span id="cb7-77"><a href="#cb7-77"></a>       <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Label, Value), </span>
+<span id="cb7-78"><a href="#cb7-78"></a>           <span class="at">y =</span> Value, <span class="at">fill =</span> severity_num)) <span class="sc">+</span></span>
+<span id="cb7-79"><a href="#cb7-79"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb7-80"><a href="#cb7-80"></a>  <span class="fu">geom_col</span>(<span class="at">data =</span> <span class="fu">filter</span>(prevalence_combined, defect_group <span class="sc">==</span> <span class="st">"Neural Tube Defect"</span>),</span>
+<span id="cb7-81"><a href="#cb7-81"></a>           <span class="at">width =</span> <span class="fl">0.7</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linewidth =</span> <span class="fl">1.1</span></span>
+<span id="cb7-82"><a href="#cb7-82"></a>           ) <span class="sc">+</span></span>
+<span id="cb7-83"><a href="#cb7-83"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb7-84"><a href="#cb7-84"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option =</span> <span class="st">"viridis"</span>, </span>
+<span id="cb7-85"><a href="#cb7-85"></a>                       <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, </span>
+<span id="cb7-86"><a href="#cb7-86"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Fatal/Severe"</span>, <span class="st">"Serious/Lifelong"</span>, <span class="st">"Significant/Variable"</span>, <span class="st">"Treatable/Correctable"</span>)</span>
+<span id="cb7-87"><a href="#cb7-87"></a>                       ) <span class="sc">+</span></span>
+<span id="cb7-88"><a href="#cb7-88"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="fu">guide_colorbar</span>(<span class="at">reverse =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb7-89"><a href="#cb7-89"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-90"><a href="#cb7-90"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Conditions by Severity"</span>,</span>
+<span id="cb7-91"><a href="#cb7-91"></a>    <span class="at">subtitle =</span> <span class="st">"Types of NTDs highlighted/outlined in red"</span>,</span>
+<span id="cb7-92"><a href="#cb7-92"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-93"><a href="#cb7-93"></a>    <span class="at">y =</span> <span class="st">"Prevalence per 10,000 live births"</span>,</span>
+<span id="cb7-94"><a href="#cb7-94"></a>    <span class="at">fill =</span> <span class="st">"Severity Level"</span></span>
+<span id="cb7-95"><a href="#cb7-95"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-96"><a href="#cb7-96"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-97"><a href="#cb7-97"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-98"><a href="#cb7-98"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb7-99"><a href="#cb7-99"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey40"</span>, <span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb7-100"><a href="#cb7-100"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>, <span class="at">color =</span> label_colors),</span>
+<span id="cb7-101"><a href="#cb7-101"></a>    <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">11</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">b =</span> <span class="dv">15</span>)),</span>
+<span id="cb7-102"><a href="#cb7-102"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb7-103"><a href="#cb7-103"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.5</span>, <span class="st">"cm"</span>)</span>
+<span id="cb7-104"><a href="#cb7-104"></a>  )</span>
+<span id="cb7-105"><a href="#cb7-105"></a><span class="in">```</span></span>
+<span id="cb7-106"><a href="#cb7-106"></a></span>
+<span id="cb7-107"><a href="#cb7-107"></a><span class="at">&gt; Neural Tube Defects are among the most serious and fatal types of birth defects.</span></span>
+<span id="cb7-108"><a href="#cb7-108"></a><span class="at">&gt; Although conditions like down Syndrome and cleft lip/palate are much more common, they are often treatable and manageable.</span></span>
+<span id="cb7-109"><a href="#cb7-109"></a><span class="at">&gt; Meanwhile spina bifida and anencephalus–which are both types of NTDs–are much less prevalent but fall at the most severe end of the spectrum.&nbsp;</span></span>
+<span id="cb7-110"><a href="#cb7-110"></a><span class="at">&gt;</span></span>
+<span id="cb7-111"><a href="#cb7-111"></a><span class="at">&gt; Spina bifida is a lifelong condition with high vulnerability for paralysis, learning disabilities, and other complications.</span></span>
+<span id="cb7-112"><a href="#cb7-112"></a><span class="at">&gt; Anencephalus is almost always fatal as babies are born with large missing parts of their brain and skull.</span></span>
+<span id="cb7-113"><a href="#cb7-113"></a><span class="at">&gt; Both of these conditions are highly serious despite its lower prevalence.</span></span>
+<span id="cb7-114"><a href="#cb7-114"></a></span>
+<span id="cb7-115"><a href="#cb7-115"></a><span class="fu">## Education &amp; Poverty Level (Socioeconomic factors)</span></span>
+<span id="cb7-116"><a href="#cb7-116"></a></span>
+<span id="cb7-119"><a href="#cb7-119"></a><span class="in">```{r}</span></span>
+<span id="cb7-120"><a href="#cb7-120"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb7-121"><a href="#cb7-121"></a></span>
+<span id="cb7-122"><a href="#cb7-122"></a>folic_master <span class="sc">%&gt;%</span></span>
+<span id="cb7-123"><a href="#cb7-123"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-124"><a href="#cb7-124"></a>    Subtopic <span class="sc">==</span> <span class="st">"Folic Acid Use"</span>,</span>
+<span id="cb7-125"><a href="#cb7-125"></a>    Variable <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Education Level"</span>, <span class="st">"Poverty Level"</span>)</span>
+<span id="cb7-126"><a href="#cb7-126"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-127"><a href="#cb7-127"></a>  <span class="fu">group_by</span>(Variable, Category) <span class="sc">%&gt;%</span></span>
+<span id="cb7-128"><a href="#cb7-128"></a>  <span class="fu">summarize</span>(<span class="at">pct =</span> <span class="fu">mean</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-129"><a href="#cb7-129"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">reorder_within</span>(Category, pct, Variable)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-130"><a href="#cb7-130"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> pct, <span class="at">y =</span> Category, <span class="at">color =</span> Variable)) <span class="sc">+</span></span>
+<span id="cb7-131"><a href="#cb7-131"></a>  <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">xend =</span> pct, <span class="at">yend =</span> Category), <span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">color =</span> <span class="st">"grey80"</span>) <span class="sc">+</span></span>
+<span id="cb7-132"><a href="#cb7-132"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb7-133"><a href="#cb7-133"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste0</span>(<span class="fu">round</span>(pct, <span class="dv">1</span>), <span class="st">"%"</span>)), <span class="at">nudge_x =</span> <span class="dv">5</span>, <span class="at">size =</span> <span class="dv">3</span>,</span>
+<span id="cb7-134"><a href="#cb7-134"></a>            <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb7-135"><a href="#cb7-135"></a>  <span class="fu">scale_y_reordered</span>() <span class="sc">+</span></span>
+<span id="cb7-136"><a href="#cb7-136"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"Education Level"</span> <span class="ot">=</span> <span class="st">"#185FA5"</span>, <span class="st">"Poverty Level"</span> <span class="ot">=</span> <span class="st">"#85B7EB"</span>)) <span class="sc">+</span></span>
+<span id="cb7-137"><a href="#cb7-137"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">72</span>), <span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">60</span>, <span class="dv">10</span>),</span>
+<span id="cb7-138"><a href="#cb7-138"></a>                     <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_percent</span>(<span class="at">scale =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb7-139"><a href="#cb7-139"></a>  <span class="fu">facet_grid</span>(Variable <span class="sc">~</span> ., <span class="at">scales =</span> <span class="st">"free_y"</span>, <span class="at">space =</span> <span class="st">"free_y"</span>) <span class="sc">+</span></span>
+<span id="cb7-140"><a href="#cb7-140"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-141"><a href="#cb7-141"></a>    <span class="at">title =</span> <span class="st">"Folic Acid Supplementation by Socioeconomic Factors, 2016-2022"</span>,</span>
+<span id="cb7-142"><a href="#cb7-142"></a>    <span class="at">x =</span> <span class="st">"Percent Taking Daily Folic Acid"</span>, <span class="at">y =</span> <span class="cn">NULL</span>, <span class="at">color =</span> <span class="cn">NULL</span></span>
+<span id="cb7-143"><a href="#cb7-143"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-144"><a href="#cb7-144"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>) <span class="sc">+</span></span>
+<span id="cb7-145"><a href="#cb7-145"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-146"><a href="#cb7-146"></a>    <span class="at">legend.position =</span> <span class="st">"none"</span>,</span>
+<span id="cb7-147"><a href="#cb7-147"></a>    <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>, <span class="at">hjust =</span> <span class="dv">0</span>),</span>
+<span id="cb7-148"><a href="#cb7-148"></a>    <span class="at">strip.background =</span> <span class="fu">element_rect</span>(<span class="at">fill =</span> <span class="st">"grey95"</span>, <span class="at">color =</span> <span class="cn">NA</span>),</span>
+<span id="cb7-149"><a href="#cb7-149"></a>    <span class="at">plot.title.position =</span> <span class="st">"plot"</span>,  </span>
+<span id="cb7-150"><a href="#cb7-150"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">hjust =</span> <span class="fl">0.5</span>),</span>
+<span id="cb7-151"><a href="#cb7-151"></a>    <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>, <span class="at">color =</span> <span class="st">"grey20"</span>),</span>
+<span id="cb7-152"><a href="#cb7-152"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"grey50"</span>),</span>
+<span id="cb7-153"><a href="#cb7-153"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-154"><a href="#cb7-154"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb7-155"><a href="#cb7-155"></a>    <span class="at">panel.grid.major.x =</span> <span class="fu">element_line</span>(<span class="at">color =</span> <span class="st">"grey92"</span>, <span class="at">linewidth =</span> <span class="fl">0.4</span>),</span>
+<span id="cb7-156"><a href="#cb7-156"></a>    <span class="at">panel.spacing =</span> <span class="fu">unit</span>(<span class="dv">1</span>, <span class="st">"lines"</span>)</span>
+<span id="cb7-157"><a href="#cb7-157"></a>  )</span>
+<span id="cb7-158"><a href="#cb7-158"></a><span class="in">```</span></span>
+<span id="cb7-159"><a href="#cb7-159"></a></span>
+<span id="cb7-160"><a href="#cb7-160"></a><span class="at">&gt; The same pattern emerges when looking at poverty level.</span></span>
+<span id="cb7-161"><a href="#cb7-161"></a><span class="at">&gt; Low-poverty mothers supplement at \~50%, which is similar to the rate for college-educated mothers, while mothers who are in the moderate or high poverty groups hover \~24% for their supplementation rate.</span></span>
+<span id="cb7-162"><a href="#cb7-162"></a><span class="at">&gt; The fact that both education and poverty point towards the same direction suggests the existence of a compounding disadvantage.</span></span>
+<span id="cb7-163"><a href="#cb7-163"></a><span class="at">&gt; Mothers who are both low-income and less educated face the greatest barriers in adequate folic acid intake, which may explain the racial and socioeconomic disparities causing higher birth defect prevalence.</span></span>
+<span id="cb7-164"><a href="#cb7-164"></a><span class="at">&gt;</span></span>
+<span id="cb7-165"><a href="#cb7-165"></a><span class="at">&gt; **What does this mean for NTDs?** Since neural tube defects form in the first month of pregnancy, often before a mother knows she is pregnant, daily supplementation *before* conception is very critical!</span></span>
+<span id="cb7-166"><a href="#cb7-166"></a><span class="at">&gt; The populations least likely to supplement consistently also end up being the populations who are most exposed to NTD risk, not necessarily due to biology, but due to structural barriers.</span></span>
+<span id="cb7-167"><a href="#cb7-167"></a></span>
+<span id="cb7-168"><a href="#cb7-168"></a><span class="fu">## Maternal Ethnicity/Race &amp; Birth Defect Type (Overall)</span></span>
+<span id="cb7-169"><a href="#cb7-169"></a></span>
+<span id="cb7-170"><a href="#cb7-170"></a><span class="at">&gt; The next question is whether these supplementation gaps show up in actual birth defect outcomes.</span></span>
+<span id="cb7-171"><a href="#cb7-171"></a><span class="at">&gt; The following charts look at defect prevalence by race/ethnicity and maternal age as two dimensions that intersect closely with the education and poverty level patterns from earlier.</span></span>
+<span id="cb7-172"><a href="#cb7-172"></a></span>
+<span id="cb7-175"><a href="#cb7-175"></a><span class="in">```{r}</span></span>
+<span id="cb7-176"><a href="#cb7-176"></a><span class="co"># Chart 1: SUM OF ALL</span></span>
+<span id="cb7-177"><a href="#cb7-177"></a>maternal_stacked <span class="ot">&lt;-</span> maternal_master <span class="sc">%&gt;%</span></span>
+<span id="cb7-178"><a href="#cb7-178"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-179"><a href="#cb7-179"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal race/ethnicity"</span>,</span>
+<span id="cb7-180"><a href="#cb7-180"></a>    <span class="sc">!</span>Category <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"All races/ethnicities combined"</span>, <span class="st">"Other/Unknown"</span>)</span>
+<span id="cb7-181"><a href="#cb7-181"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-182"><a href="#cb7-182"></a>  <span class="fu">group_by</span>(Category, Note) <span class="sc">%&gt;%</span></span>
+<span id="cb7-183"><a href="#cb7-183"></a>  <span class="fu">summarize</span>(<span class="at">avg_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-184"><a href="#cb7-184"></a>  <span class="fu">mutate</span>(<span class="at">Note =</span> <span class="fu">str_remove</span>(Note, <span class="st">" </span><span class="sc">\\</span><span class="st">(.*</span><span class="sc">\\</span><span class="st">)"</span>), <span class="at">Category =</span> <span class="fu">str_remove</span>(Category, <span class="st">",? Non-Hispanic| Non-Hispanic|/Non-Hispanic"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb7-185"><a href="#cb7-185"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
+<span id="cb7-186"><a href="#cb7-186"></a>  <span class="fu">mutate</span>(<span class="at">total =</span> <span class="fu">sum</span>(avg_prevalence)) <span class="sc">%&gt;%</span>  <span class="co"># adds total for ordering</span></span>
+<span id="cb7-187"><a href="#cb7-187"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb7-188"><a href="#cb7-188"></a></span>
+<span id="cb7-189"><a href="#cb7-189"></a><span class="fu">ggplot</span>(maternal_stacked, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Category, total),  <span class="co"># orders by total now</span></span>
+<span id="cb7-190"><a href="#cb7-190"></a>                              <span class="at">y =</span> avg_prevalence, </span>
+<span id="cb7-191"><a href="#cb7-191"></a>                              <span class="at">fill =</span> Note)) <span class="sc">+</span></span>
+<span id="cb7-192"><a href="#cb7-192"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb7-193"><a href="#cb7-193"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb7-194"><a href="#cb7-194"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">option =</span> <span class="st">"viridis"</span>) <span class="sc">+</span></span>
+<span id="cb7-195"><a href="#cb7-195"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-196"><a href="#cb7-196"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Race/Ethnicity &amp; Defect Type"</span>,</span>
+<span id="cb7-197"><a href="#cb7-197"></a>    <span class="at">subtitle =</span> <span class="st">"Per 10,000 live births, 2016–2020"</span>,</span>
+<span id="cb7-198"><a href="#cb7-198"></a>    <span class="at">x =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-199"><a href="#cb7-199"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births (2016–2020 sum)"</span>,</span>
+<span id="cb7-200"><a href="#cb7-200"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
+<span id="cb7-201"><a href="#cb7-201"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-202"><a href="#cb7-202"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-203"><a href="#cb7-203"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>,</span>
+<span id="cb7-204"><a href="#cb7-204"></a>        <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">8</span>),</span>
+<span id="cb7-205"><a href="#cb7-205"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb7-206"><a href="#cb7-206"></a>        <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>)</span>
+<span id="cb7-207"><a href="#cb7-207"></a>        )</span>
+<span id="cb7-208"><a href="#cb7-208"></a><span class="in">```</span></span>
+<span id="cb7-209"><a href="#cb7-209"></a></span>
+<span id="cb7-210"><a href="#cb7-210"></a><span class="at">&gt; American Indian/Alaska Native mothers carry the highest birth defect burden of any racial group in Minnesota, followed by Black/Non-Hispanic mothers.</span></span>
+<span id="cb7-211"><a href="#cb7-211"></a><span class="at">&gt; Cardiovascular defects are the majority of the across all groups, but these are also populations that face disproportionate socioeconomic barriers, which remain consistent with the supplementation gaps we saw before.</span></span>
+<span id="cb7-212"><a href="#cb7-212"></a><span class="at">&gt; Meanwhile, Asian or Pacific Islander mothers show the lowest overall prevalence.</span></span>
+<span id="cb7-213"><a href="#cb7-213"></a><span class="at">&gt; Note that NTDs are not included in this dataset and are analyzed separately.</span></span>
+<span id="cb7-214"><a href="#cb7-214"></a></span>
+<span id="cb7-215"><a href="#cb7-215"></a><span class="fu">## Birth Defect Prevalence (Overall) by Maternal Age</span></span>
+<span id="cb7-216"><a href="#cb7-216"></a></span>
+<span id="cb7-219"><a href="#cb7-219"></a><span class="in">```{r}</span></span>
+<span id="cb7-220"><a href="#cb7-220"></a>gastroschisis_clean <span class="ot">&lt;-</span> gastroschisis <span class="sc">%&gt;%</span></span>
+<span id="cb7-221"><a href="#cb7-221"></a>  <span class="fu">mutate</span>(<span class="at">Note =</span> <span class="st">"Gastroschisis"</span>)</span>
+<span id="cb7-222"><a href="#cb7-222"></a></span>
+<span id="cb7-223"><a href="#cb7-223"></a>maternal_age_bar <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(maternal_master, gastroschisis_clean) <span class="sc">%&gt;%</span></span>
+<span id="cb7-224"><a href="#cb7-224"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-225"><a href="#cb7-225"></a>    Variable <span class="sc">==</span> <span class="st">"Maternal age"</span>,</span>
+<span id="cb7-226"><a href="#cb7-226"></a>    Category <span class="sc">!=</span> <span class="st">"All ages"</span></span>
+<span id="cb7-227"><a href="#cb7-227"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb7-228"><a href="#cb7-228"></a>  <span class="fu">group_by</span>(Category, Note) <span class="sc">%&gt;%</span></span>
+<span id="cb7-229"><a href="#cb7-229"></a>  <span class="fu">summarize</span>(<span class="at">total_prevalence =</span> <span class="fu">sum</span>(Value, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-230"><a href="#cb7-230"></a>  <span class="fu">mutate</span>(<span class="at">Category =</span> <span class="fu">factor</span>(Category, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"&lt;20"</span>, <span class="st">"20-24"</span>, <span class="st">"25-29"</span>, <span class="st">"30-34"</span>, <span class="st">"35-39"</span>, <span class="st">"≥40"</span>)))</span>
+<span id="cb7-231"><a href="#cb7-231"></a></span>
+<span id="cb7-232"><a href="#cb7-232"></a>age_totals <span class="ot">&lt;-</span> maternal_age_bar <span class="sc">%&gt;%</span></span>
+<span id="cb7-233"><a href="#cb7-233"></a>  <span class="fu">group_by</span>(Category) <span class="sc">%&gt;%</span></span>
+<span id="cb7-234"><a href="#cb7-234"></a>  <span class="fu">summarize</span>(<span class="at">total =</span> <span class="fu">sum</span>(total_prevalence), <span class="at">.groups =</span> <span class="st">"drop"</span>)</span>
+<span id="cb7-235"><a href="#cb7-235"></a></span>
+<span id="cb7-236"><a href="#cb7-236"></a><span class="fu">ggplot</span>(maternal_age_bar, <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total_prevalence, <span class="at">fill =</span> Note)) <span class="sc">+</span></span>
+<span id="cb7-237"><a href="#cb7-237"></a>  <span class="fu">geom_col</span>(<span class="at">width =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb7-238"><a href="#cb7-238"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb7-239"><a href="#cb7-239"></a>    <span class="at">data =</span> age_totals,</span>
+<span id="cb7-240"><a href="#cb7-240"></a>    <span class="fu">aes</span>(<span class="at">x =</span> Category, <span class="at">y =</span> total, <span class="at">label =</span> <span class="fu">round</span>(total, <span class="dv">1</span>)),</span>
+<span id="cb7-241"><a href="#cb7-241"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-242"><a href="#cb7-242"></a>    <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">3.5</span>, <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">color =</span> <span class="st">"grey20"</span></span>
+<span id="cb7-243"><a href="#cb7-243"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-244"><a href="#cb7-244"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>))) <span class="sc">+</span></span>
+<span id="cb7-245"><a href="#cb7-245"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb7-246"><a href="#cb7-246"></a>    <span class="st">"Chromosomal"</span>                          <span class="ot">=</span> <span class="st">"#08306B"</span>,</span>
+<span id="cb7-247"><a href="#cb7-247"></a>    <span class="st">"Musculoskeletal  (Muscles and Bones)"</span> <span class="ot">=</span> <span class="st">"#3182BD"</span>,</span>
+<span id="cb7-248"><a href="#cb7-248"></a>    <span class="st">"Gastroschisis"</span>                        <span class="ot">=</span> <span class="st">"#85B7EB"</span></span>
+<span id="cb7-249"><a href="#cb7-249"></a>  )) <span class="sc">+</span></span>
+<span id="cb7-250"><a href="#cb7-250"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-251"><a href="#cb7-251"></a>    <span class="at">title =</span> <span class="st">"Birth Defect Prevalence by Maternal Age Group"</span>,</span>
+<span id="cb7-252"><a href="#cb7-252"></a>    <span class="at">subtitle =</span> <span class="st">"Total prevalence per 10,000 live births, 2016–2020"</span>,</span>
+<span id="cb7-253"><a href="#cb7-253"></a>    <span class="at">x =</span> <span class="st">"Maternal Age Group"</span>,</span>
+<span id="cb7-254"><a href="#cb7-254"></a>    <span class="at">y =</span> <span class="st">"Total prevalence per 10,000 live births"</span>,</span>
+<span id="cb7-255"><a href="#cb7-255"></a>    <span class="at">fill =</span> <span class="st">"Defect type"</span></span>
+<span id="cb7-256"><a href="#cb7-256"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-257"><a href="#cb7-257"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-258"><a href="#cb7-258"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-259"><a href="#cb7-259"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">13</span>),</span>
+<span id="cb7-260"><a href="#cb7-260"></a>    <span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">9</span>),</span>
+<span id="cb7-261"><a href="#cb7-261"></a>    <span class="at">legend.key.size =</span> <span class="fu">unit</span>(<span class="fl">0.4</span>, <span class="st">"cm"</span>)</span>
+<span id="cb7-262"><a href="#cb7-262"></a>  )</span>
+<span id="cb7-263"><a href="#cb7-263"></a><span class="in">```</span></span>
+<span id="cb7-264"><a href="#cb7-264"></a></span>
+<span id="cb7-265"><a href="#cb7-265"></a><span class="at">&gt; Birth defect prevalence follows a slight U-shaped curve pattern by maternal age where the highest rates appear at the extremes, mothers under 20 and mothers 40 or older.</span></span>
+<span id="cb7-266"><a href="#cb7-266"></a><span class="at">&gt; While mothers in their late 20s show the lowest amount of birth defect prevalance.</span></span>
+<span id="cb7-267"><a href="#cb7-267"></a><span class="at">&gt; The spike at older 40+ mothers is largely driven by chromosomal risks like Down syndrome.</span></span>
+<span id="cb7-268"><a href="#cb7-268"></a><span class="at">&gt; Meanwhile, teen mothers are also among the least likely to be supplementing with folic acid before conception, and are disproportionately represented in lower-income and lower-education groups.</span></span>
+<span id="cb7-269"><a href="#cb7-269"></a><span class="at">&gt; This makes the age at the youngest end another dimension of the same compounding disadvantage within this demographic.</span></span>
+<span id="cb7-270"><a href="#cb7-270"></a></span>
+<span id="cb7-271"><a href="#cb7-271"></a>------------------------------------------------------------------------</span>
+<span id="cb7-272"><a href="#cb7-272"></a></span>
+<span id="cb7-273"><a href="#cb7-273"></a>In our datasets there is a consistent pattern that emerges.</span>
+<span id="cb7-274"><a href="#cb7-274"></a>Groups with lower socioeconomic status and belonging to certain racial/ethnic minorities face compounding risks for birth defects.</span>
+<span id="cb7-275"><a href="#cb7-275"></a>Lower education and poverty predict a reduced folic acid supplementation, and Hispanic and Black mothers show both lower supplementation rates and higher NTD and overall birth defect prevalence respectively.</span>
+<span id="cb7-276"><a href="#cb7-276"></a>The 1998 folic acid fortification mandate reduced the NTD rates broadly but it did not close the racial gaps which point towards the structural barriers beyond food supply access that continue to affect maternal health outcomes in Minnesota.</span>
+<span id="cb7-277"><a href="#cb7-277"></a></span>
+<span id="cb7-278"><a href="#cb7-278"></a>Two key data limitations should be noted: NTD prevalence data is only available for Hispanic, White Non-Hispanic, and Black Non-Hispanic groups, so the NTD and overall birth defect datasets cannot be directly combined since they may use different measurement methods and time periods.</span>
 </code></pre></div><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
