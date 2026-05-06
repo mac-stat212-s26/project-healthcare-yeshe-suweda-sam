@@ -2,6 +2,7 @@
 title: "Birth Defects in Minnesota Data Report"
 ---
 
+[Slideshow](https://docs.google.com/presentation/d/1wqG2V_0zz8rm9PhzIilINZWCDRqh-YvqoaYG-aTcGZE/edit?usp=sharing)
 
 How does food policy, education, and socioeconomic status shape birth defect outcomes across populations?
 
@@ -46,13 +47,34 @@ Within the few years of 1996–1997, the FDA published its ruling on folic acid 
 
 Then finally in 1998 and onwards, the folic acid fortification for grain products became mandatory and NTD rates continued to decline across all racial groups, although racial gaps did still persist.
 
+## Birth Defect Prevalence
+
+To begin this investigation, it's crucial to understand the scale of the problem.
+
+```{r echo = FALSE}
+library(tidyverse)
+library(tidytext)
+
+maternal_master <- read.csv('data/raw/Birth Defects_Maternal Characteristics.csv')
+
+prevalence <- maternal_master %>%
+  group_by(Note) %>%
+  summarize(total_count = sum(Count))
+
+ggplot(prevalence, aes(y = reorder(Note, total_count), x = total_count, fill = Note)) +
+  geom_bar(stat = 'identity') +
+  labs(title = "General Prevalence of Birth Defect Types", x = "Count", y = "Defect type") +
+  scale_fill_viridis_d(guide = "none") +
+  theme_classic()
+
+```
+Cardiovascular defects are by far the most prevalent, more than doubling the next most frequent, genitourinary. According to [Mayo Clinic](https://www.mayoclinic.org/diseases-conditions/congenital-heart-defects-children/symptoms-causes/syc-20350074), these defects create an abnormality in the structure or function of the heart. Their exact cause isn't certain, but researchers note that medicines, health conditions, or lifestyles may be related. 
 
 ## Supplementation: Education & Poverty Gaps
 Despite the fortification policy, the daily supplementation rates varied drastically by education and poverty levels among Minnesota mothers (2016-2022). 
 
 ```{r echo = FALSE}
-library(tidyverse)
-library(tidytext)
+
 
 folic_master <- read.csv('data/raw/Birth Defects_Folic Acid.csv')
 
@@ -95,18 +117,16 @@ folic_master %>%
 ```
 
 The gap between the lowest (21.3%) and the highest (53.2%) education groups is around 32.6%. This directional pattern is the same for poverty levels as mothers with low poverty levels supplement daily around 49.6% while those in more moderate-to-high poverty level groups hover around 24% of daily folic acid intake.
-Both of the dimensions on education
-
-point in the same direction, suggesting a compounding disadvantage. Mothers who are both lower-income and less educated face the greatest barriers to consistent folic acid intake — and therefore the highest exposure to preventable NTD risk.
+Both of the dimensions on education point in the same direction, suggesting a compounding disadvantage. Mothers who are both lower-income and less educated face the greatest barriers to consistent folic acid intake — and therefore the highest exposure to preventable NTD risk.
 
 
 
 
 
 ## Birth Defect Prevalence by Race/Ethnicity
-When looking at the birth defect outcomes by maternal race/ethnicity in Minnesota (2016–2020), the disparities reflected smth smth
+When looking at the birth defect outcomes by maternal race/ethnicity in Minnesota (2016–2020), the disparities reflect significant inequalities. 
 ```{r echo = FALSE}
-maternal_master <- read.csv('data/raw/Birth Defects_Maternal Characteristics.csv')
+
 
 maternal_stacked <- maternal_master %>%
   filter(
