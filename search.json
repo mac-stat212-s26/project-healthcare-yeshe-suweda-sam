@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Project Title",
     "section": "",
-    "text": "Background & Motivation\nHow does food policy, education, and socioeconomic status shape birth defect outcomes across populations?\nBirth defects affect thousands of families in Minnesota and these conditions vary significantly in prevalence across racial, economic, and educational groups, from cardiovascular malformations to neural tube defects. Two questions drove forth our analysis for this project:\nNeural tube defects (NTDs) are a serious condition that affect the brain, spine, or spinal cord and typically form within the first month of pregnancy, often before a mother even knows she is pregnant.\nFolate is a vitamin B9 nutrient that is important for DNA synthesis, cell division, and cell formation. Natural folate is found in leafy greens, legumes, nuts, and fortified grains, while synthetic folic acid is better absobred and typically taken as supplements. More than half of NTDs are preventable with adequate folate and folic acid intake.\nThe CDC recommends that all women from ages 15 to 45 should consume 400 mcg of folic acid daily, even if they are not planning on a pregnancy.",
+    "text": "Background & Motivation\nSlideshow\nHow does food policy, education, and socioeconomic status shape birth defect outcomes across populations?\nBirth defects affect thousands of families in Minnesota and these conditions vary significantly in prevalence across racial, economic, and educational groups, from cardiovascular malformations to neural tube defects. Two questions drove forth our analysis for this project:\nNeural tube defects (NTDs) are a serious condition that affect the brain, spine, or spinal cord and typically form within the first month of pregnancy, often before a mother even knows she is pregnant.\nFolate is a vitamin B9 nutrient that is important for DNA synthesis, cell division, and cell formation. Natural folate is found in leafy greens, legumes, nuts, and fortified grains, while synthetic folic acid is better absobred and typically taken as supplements. More than half of NTDs are preventable with adequate folate and folic acid intake.\nThe CDC recommends that all women from ages 15 to 45 should consume 400 mcg of folic acid daily, even if they are not planning on a pregnancy.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth Defects in Minnesota Data Report</span>"
     ]
@@ -40,11 +40,21 @@
     ]
   },
   {
+    "objectID": "index.html#birth-defect-prevalence",
+    "href": "index.html#birth-defect-prevalence",
+    "title": "Project Title",
+    "section": "Birth Defect Prevalence",
+    "text": "Birth Defect Prevalence\nTo begin this investigation, it’s crucial to understand the scale of the problem.\n\n\n\n\n\n\n\n\n\nCardiovascular defects are by far the most prevalent, more than doubling the next most frequent, genitourinary. According to Mayo Clinic, these defects create an abnormality in the structure or function of the heart. Their exact cause isn’t certain, but researchers note that medicines, health conditions, or lifestyles may be related.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth Defects in Minnesota Data Report</span>"
+    ]
+  },
+  {
     "objectID": "index.html#supplementation-education-poverty-gaps",
     "href": "index.html#supplementation-education-poverty-gaps",
     "title": "Project Title",
     "section": "Supplementation: Education & Poverty Gaps",
-    "text": "Supplementation: Education & Poverty Gaps\nDespite the fortification policy, the daily supplementation rates varied drastically by education and poverty levels among Minnesota mothers (2016-2022).\n\n\n\n\n\n\n\n\n\nThe gap between the lowest (21.3%) and the highest (53.2%) education groups is around 32.6%. This directional pattern is the same for poverty levels as mothers with low poverty levels supplement daily around 49.6% while those in more moderate-to-high poverty level groups hover around 24% of daily folic acid intake. Both of the dimensions on education\npoint in the same direction, suggesting a compounding disadvantage. Mothers who are both lower-income and less educated face the greatest barriers to consistent folic acid intake — and therefore the highest exposure to preventable NTD risk.",
+    "text": "Supplementation: Education & Poverty Gaps\nDespite the fortification policy, the daily supplementation rates varied drastically by education and poverty levels among Minnesota mothers (2016-2022).\n\n\n\n\n\n\n\n\n\nThe gap between the lowest (21.3%) and the highest (53.2%) education groups is around 32.6%. This directional pattern is the same for poverty levels as mothers with low poverty levels supplement daily around 49.6% while those in more moderate-to-high poverty level groups hover around 24% of daily folic acid intake. Both of the dimensions on education point in the same direction, suggesting a compounding disadvantage. Mothers who are both lower-income and less educated face the greatest barriers to consistent folic acid intake — and therefore the highest exposure to preventable NTD risk.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth Defects in Minnesota Data Report</span>"
     ]
@@ -54,7 +64,7 @@
     "href": "index.html#birth-defect-prevalence-by-raceethnicity",
     "title": "Project Title",
     "section": "Birth Defect Prevalence by Race/Ethnicity",
-    "text": "Birth Defect Prevalence by Race/Ethnicity\nWhen looking at the birth defect outcomes by maternal race/ethnicity in Minnesota (2016–2020), the disparities reflected smth smth\n\n\n\n\n\n\n\n\n\nAmerican Indian or Alaska Native and Black/non-Hispanic mothers have the highest burden in overall birth defect. These groups are those that also face disproportionate socioeconomic barriers, which is consistent with the supplementation gaps we observed for those of lower education and higher poverty levels.\n\n\n\n\n\n\n\n\n\nFor neural tube defects specifically, Hispanic populations are seen to experience the highest NTD prevalence in Minnesota, even despite the racial gap narrowing after the 1998 fortification. Meanwhile, black/non-Hispanic mothers show the lowest rates of NTDs.",
+    "text": "Birth Defect Prevalence by Race/Ethnicity\nWhen looking at the birth defect outcomes by maternal race/ethnicity in Minnesota (2016–2020), the disparities reflect significant inequalities.\n\n\n\n\n\n\n\n\n\nAmerican Indian or Alaska Native and Black/non-Hispanic mothers have the highest burden in overall birth defect. These groups are those that also face disproportionate socioeconomic barriers, which is consistent with the supplementation gaps we observed for those of lower education and higher poverty levels.\n\n\n\n\n\n\n\n\n\nFor neural tube defects specifically, Hispanic populations are seen to experience the highest NTD prevalence in Minnesota, even despite the racial gap narrowing after the 1998 fortification. Meanwhile, black/non-Hispanic mothers show the lowest rates of NTDs.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth Defects in Minnesota Data Report</span>"
     ]
