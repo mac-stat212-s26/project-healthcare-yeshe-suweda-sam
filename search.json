@@ -64,7 +64,7 @@
     "href": "index.html#key-findings-takeaways",
     "title": "Project Title",
     "section": "Key Findings & Takeaways",
-    "text": "Key Findings & Takeaways\n\nData Notes & Limitations\nThe NTD prevalence data is only available for Hispanic, White/non-Hispanic, and Black/non-Hispanic groups, so the NTD and overall birth defect datasets cannot be combined directly as they may use different scaling methods and time periods.",
+    "text": "Key Findings & Takeaways\nWhile the FDA’s ruling on fortification made an impact across racial and ethnic groups, it did not entirely close the gap in neural tube defect prevalence.\nThis trend also continues with other birth defects, as we see significant differences by race. Policy changes have reduced the burden equally, but signs still point to systemic inequities at play.\n\nLimitations & Future Work\nThe NTD prevalence data is only available for Hispanic, White/non-Hispanic, and Black/non-Hispanic groups, so the NTD and overall birth defect datasets cannot be combined directly as they may use different scaling methods and time periods.\nThe time frame and geographic range is also limited. More context on national patterns over more time could reveal more trends and insights.\nThe supplementation data is self-reported, which can cause overestimation and recall bias.\nAdditionally, many other factors, like insurance status and diet may be at play for both supplementation habits and prevalence.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Birth Defects in Minnesota Data Report</span>"
     ]
@@ -287,39 +287,6 @@
     "crumbs": [
       "Appendices",
       "<span class='chapter-number'>B</span>  <span class='chapter-title'>Case Study</span>"
-    ]
-  },
-  {
-    "objectID": "wa/wa-member1.html",
-    "href": "wa/wa-member1.html",
-    "title": "Appendix C — Member 1 First Name & Last Name Initial",
-    "section": "",
-    "text": "Work area to try code",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>C</span>  <span class='chapter-title'>Member 1 First Name & Last Name Initial</span>"
-    ]
-  },
-  {
-    "objectID": "wa/wa-member2.html",
-    "href": "wa/wa-member2.html",
-    "title": "Appendix D — Member 2 First Name & Last Name Initial",
-    "section": "",
-    "text": "Work area to try code",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>D</span>  <span class='chapter-title'>Member 2 First Name & Last Name Initial</span>"
-    ]
-  },
-  {
-    "objectID": "wa/wa-member3.html",
-    "href": "wa/wa-member3.html",
-    "title": "Appendix E — Member 3 First Name & Last Name Initial",
-    "section": "",
-    "text": "Work area to try code",
-    "crumbs": [
-      "Appendices",
-      "<span class='chapter-number'>E</span>  <span class='chapter-title'>Member 3 First Name & Last Name Initial</span>"
     ]
   }
 ]
