@@ -156,6 +156,9 @@ avg_ntd_prevalence <- ntd_prevalence %>%
   summarize(Value = mean(Value)) %>%
   mutate(Category = "Average")
 
+ntd_master <- ntd_prevalence %>%
+  bind_rows(avg_ntd_prevalence)
+
 ggplot(ntd_master, aes(x = year, y = Value)) +
   annotate("rect", xmin = 1995, xmax = 1997, ymin = 2, ymax = 12, alpha = 0.5, fill = "grey") +
   geom_smooth(aes(color = Category, linetype = Category), se = FALSE) +
@@ -174,5 +177,6 @@ For neural tube defects specifically, Hispanic populations are seen to experienc
 
 
 ### Data Notes & Limitations
+
 The NTD prevalence data is only available for Hispanic, White/non-Hispanic, and Black/non-Hispanic groups, so the NTD and overall birth defect datasets cannot be combined directly as they may use different scaling methods and time periods.
 
