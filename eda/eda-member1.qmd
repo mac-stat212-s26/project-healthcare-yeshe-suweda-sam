@@ -92,7 +92,7 @@ ntd_master <- ntd_prevalence %>%
 
 ```{r}
 ggplot(ntd_master, aes(x = year, y = Value)) +
-  annotate("rect", xmin = 1995, xmax = 1997, ymin = 2, ymax = 12, alpha = 0.5, fill = "grey") +S
+  annotate("rect", xmin = 1995, xmax = 1997, ymin = 2, ymax = 12, alpha = 0.5, fill = "grey") +
   geom_smooth(aes(color = Category, linetype = Category), se = FALSE) +
   scale_color_viridis_d() +
   scale_linetype_manual(values = c(2, 1, 1, 1)) +
