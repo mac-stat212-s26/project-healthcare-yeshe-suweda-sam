@@ -13,7 +13,7 @@ The **data** subdirectory contains the raw data, accessed from Minnesota Departm
 The **eda** subdirectory contains our individual explorations and analyses of the data.
 
 # Requirements
-This was created for R 4.2.2, and RStudio (edition here)
+This was created for R 4.2.2, and RStudio 2026.01.0+392. 
 
 # How to Use
 

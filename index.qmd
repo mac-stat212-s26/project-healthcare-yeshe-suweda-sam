@@ -172,11 +172,17 @@ For neural tube defects specifically, Hispanic populations are seen to experienc
 
 ## Key Findings & Takeaways
 
+While the FDA's ruling on fortification made an impact across racial and ethnic groups, it did not entirely close the gap in neural tube defect prevalence.
+
+This trend also continues with other birth defects, as we see significant differences by race. Policy changes have reduced the burden equally, but signs still point to systemic inequities at play. 
 
 
-
-
-### Data Notes & Limitations
+### Limitations & Future Work
 
 The NTD prevalence data is only available for Hispanic, White/non-Hispanic, and Black/non-Hispanic groups, so the NTD and overall birth defect datasets cannot be combined directly as they may use different scaling methods and time periods.
 
+The time frame and geographic range is also limited. More context on national patterns over more time could reveal more trends and insights.
+
+The supplementation data is self-reported, which can cause overestimation and recall bias. 
+
+Additionally, many other factors, like insurance status and diet may be at play for both supplementation habits and prevalence.
