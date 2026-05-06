@@ -6,16 +6,33 @@ title: "Birth Defects in Minnesota Data Report"
 How does food policy, education, and socioeconomic status shape birth defect outcomes across populations?
 
 ## Background & Motivation
+
 Birth defects affect thousands of families in Minnesota and these conditions vary significantly in prevalence across racial, economic, and educational groups, from cardiovascular malformations to neural tube defects. Two questions drove forth our analysis for this project:
 
 - Question 1: What maternal characteristics increase the risk for different types of birth defects?
 - Question 2: How did the folic acid fortification policy affect the prevalence of Neural Tube Defects (NTDs)?
 
-Neural tube defects (NTDs) are a serious condition that affect the brain, spine, or spinal cord and typiclly form within the first month of pregnancy, often before a mother even knows she is pregnant.  
+Neural tube defects (NTDs) are a serious condition that affect the brain, spine, or spinal cord and typically form within the first month of pregnancy, often before a mother even knows she is pregnant.  
 
 Folate is a vitamin B9 nutrient that is important for DNA synthesis, cell division, and cell formation. Natural folate is found in leafy greens, legumes, nuts, and fortified grains, while synthetic folic acid is better absobred and typically taken as supplements. More than half of NTDs are preventable with adequate folate and folic acid intake.
 
 The CDC recommends that all women from ages 15 to 45 should consume 400 mcg of folic acid daily, even if they are not planning on a pregnancy. 
+
+## Data Used
+
+To answer our research questions, we looked at datasets from the [Minnesota Department of Health](https://mndata.web.health.state.mn.us/birth_defects/messaging_pre.html).
+
+### Folic Acid
+
+The first of these datasets is the Folic Acid dataset. 
+
+This has by-year data on neural tube defect prevalence from 1995 to 2011, and has information about racial demographics. The data was sourced from the National Center on Birth Defects and Developmental Disabilites. This data was reported to the CDC by 19 separate U.S. state surveillance programs.
+
+The dataset also includes information on folic acid supplementation, which is sourced from the CDC's Pregnancy Risk Assessment Monitoring Systems programming. New families may be randomly picked to participate from the birth certificate registry, and recieve a survey to answer. 
+
+### Maternal Characteristics
+
+The second of the datasets is about maternal characteristics, which  includes information about age, race, and ethnicity, and specific birth defect prevalences. This data comes from the Minnesota Birth Defects Information System, which collects data from Minnesota hospitals and clinics about birth outcomes and demographics.
 
 
 ## Folic Acid Fortification Policy
