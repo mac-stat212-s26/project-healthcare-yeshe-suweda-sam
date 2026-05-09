@@ -1,5 +1,61 @@
 ---
-title: "Member 2 First Name & Last Name Initial"
+title: "Suweda S"
 ---
 
 Your exploratory data analysis of the team datasets go here.
+
+#load packages
+
+library(tidyverse)
+data_1 <- read.csv("../data/raw/Birth Defects_ntd_rates_data.csv")
+head(data_1)
+colnames(data_1)
+
+cleandata <- data_1 %>% filter(!is.na(Year), !is.na(Value))
+
+
+cleandata$Note <- tolower(cleandata$Note)
+
+
+cleandata <- cleandata[, colSums(is.na(cleandata)) < nrow(cleandata)]
+
+# Remove rows with more than 5 NAs
+cleandata <- cleandata[rowSums(is.na(cleandata)) <= 5, ]
+
+#seperate them
+
+prefort_data <- cleandata %>% filter(Note == "pre-fortification")
+
+post_data <-cleandata %>% filter(Note == "post-fortification")
+#find the mean for 10,000 live births for pre and post
+
+prefort_data <- prefort_data %>% filter(!is.na(Value))
+post_data <- post_data %>% filter(!is.na(Value))
+
+
+pre_mean <- mean(prefort_data$Value, na.rm = TRUE)
+post_mean <- mean(post_data$Value, na.rm = TRUE)
+
+#7.6 Neural Tube Defects per 10,000 live births (pre-mean)
+
+#5.27 Neural Tube Defects per 10,000 live births (post-mean)
+#combine data sets so we can plot
+
+all_data <- rbind(
+  prefort_data %>% mutate(Fortification = "Pre-fortification"),
+  post_data %>% mutate(Fortification = "Post-fortification")
+)
+
+#viz
+
+ggplot(all_data, aes(x = factor(Year), y = Value, color = Fortification)) + 
+  geom_line(size = 1.2) +  
+  geom_point(size = 3) +   
+  scale_color_manual(values = c("Pre-fortification"  = "pink", "Post-fortification" = "powderblue")) + 
+  theme_minimal() + 
+  labs( title = "Neural Tube Defects: Pre vs Post-Fortification", x = "Year", y = "NTD per 10,000 Live Births" ) + 
+  scale_x_discrete(
+    breaks = seq(1995, 2011, by = 2))
+
+
+

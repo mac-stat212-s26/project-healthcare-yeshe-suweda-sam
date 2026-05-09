@@ -2,4 +2,29 @@
 title: "Case Study"
 ---
 
-Your case study go here.
+## Introduction
+
+The [Pudding article on pockets](https://pudding.cool/2018/08/pockets/) begins with a relatable introduction to the problem. Fashion frustrations are almost universal, and the pockets debacle is a notoriously nonsensical one. The following paragraph digs further into the problem domain, quantifying the prevalence of the problem, and introduces the the implications of the pocket problem- both with gender inequality and manufactured necessity of purses. Then, in the third and fourth paragraphs, the article describes how they're making sense of the problem (with data) and briefly describes their methods.
+
+## Descriptive Visualizations and Data
+
+The visualizations increase in analytical depth, starting with just **showing** the reader the different pockets, faceted by gender. Then, a rudimentary average size. Their analysis of the data starts with some hand-wave-y language, like, "women's pockets are *ridiculous*," and not technical. That is followed up with concrete numbers, "pockets in women's jeans are 48% shorter." These visualizations are simple, not flashy, and effective.
+
+## In Depth
+
+The article then investigates functional impact of the data discovered earlier, and test what can fit in a pocket. The language is approachable, with some data included, and emphasizes the frustration that can occur with pants shopping.
+This data is presented more thoroughly in the form of an **interactive** visualization. There's an aggregate, alongside a brand-by-brand breakdown, if the reader wants to get specific.
+They make a broad conclusion here, "women's front pockets are indeed smaller than men's," and address a potential confounder of this data- waistband size- which they controlled for.
+
+Then, they break into other factors affecting pocket size, like style (straight vs. skinny), and they look at back pockets. 
+
+## Conclusion
+
+The article concludes with historical context, attempting to answer the question of **why?** and touches briefly on the problem's roots in misogyny and objectification. It ends with a simple call to action.
+
+## Additional Info
+
+While the article is made for a general audience, there's a supplemental added methods section of the article, which included justification for methods, and more information on how the tests were conducted.
+
+
+

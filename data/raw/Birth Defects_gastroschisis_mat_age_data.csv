@@ -1,0 +1,8 @@
+"Topic","Datafeed","Subtopic","Label","Year","Month","Geography","Geo ID","Geo Name","Variable","Category","Value","Measure","Count","Population","Note","Upper CL","Lower CL"
+"Birth Defects","Maternal characteristics","Maternal age","","2016-2020","","State","27000","Minnesota","Maternal age","All ages","3","Prevalence per 10,000 live births","98","","Musculoskeletal  (Muscles and Bones)","",""
+"Birth Defects","Maternal characteristics","Maternal age","","2016-2020","","State","27000","Minnesota","Maternal age","20-24","9.2","Prevalence per 10,000 live births","41","","Musculoskeletal  (Muscles and Bones)","",""
+"Birth Defects","Maternal characteristics","Maternal age","","2016-2020","","State","27000","Minnesota","Maternal age","25-29","2.9","Prevalence per 10,000 live births","28","","Musculoskeletal  (Muscles and Bones)","",""
+"Birth Defects","Maternal characteristics","Maternal age","","2016-2020","","State","27000","Minnesota","Maternal age","30-34","1.1","Prevalence per 10,000 live births","12","","Musculoskeletal  (Muscles and Bones)","",""
+"Birth Defects","Maternal characteristics","Maternal age","","2016-2020","","State","27000","Minnesota","Maternal age","35-39","1","Prevalence per 10,000 live births","5","","Musculoskeletal  (Muscles and Bones)","",""
+"Birth Defects","Maternal characteristics","Maternal age","","2016-2020","","State","27000","Minnesota","Maternal age","<20","12.9","Prevalence per 10,000 live births","12","","Musculoskeletal  (Muscles and Bones)","",""
+"Birth Defects","Maternal characteristics","Maternal age","","2016-2020","","State","27000","Minnesota","Maternal age","≥40","0","Prevalence per 10,000 live births","0","","Musculoskeletal  (Muscles and Bones)","",""
