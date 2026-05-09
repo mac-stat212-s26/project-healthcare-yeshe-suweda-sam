@@ -7,11 +7,11 @@ Using data from the [Minnesota Department of Health](https://mndata.web.health.s
 
 
 ## Repository Structure
-- `index.qmd` contains the clean, complete code for our final report. 
-- `data` subdirectory contains the raw data, accessed from Minnesota Department of Health on 4-21-2026:
-- `appx/proposal` is our initial plan and proposal for this project.
-- `appx/case-study` is our analysis of a Pudding article.
-- The `eda` subdirectory contains our individual explorations and analyses of the data.
+- `index.qmd` contains the clean, complete code for our final report
+- `data` subdirectory contains the raw data, accessed from the MDH on 4-21-2026
+- `appx/proposal` is our initial plan and proposal for this project
+- `appx/case-study` is our analysis of a Pudding article
+- `eda` subdirectory contains our individual explorations and analyses of the data
 
 
 ### How to Use
